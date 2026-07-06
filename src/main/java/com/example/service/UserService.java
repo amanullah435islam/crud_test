@@ -49,6 +49,34 @@ public class UserService {
                 .map(user -> new UserResponse(user.getId(), user.getName()))
                 .collect(Collectors.toList());
     }
+    
+    
+    public UserResponse getById(Long id) {
+        User user = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+        
+        // Map Entity to safe Response DTO
+        return new UserResponse(user.getId(), user.getName());
+    }
+    
+    
+    public UserResponse getById2(Long id) {
+    	
+    	User user = repo.findById(id)
+    				.orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+    	return new UserResponse(user.getId(),user.getName());
+    }
+    
+    
+    
+    public void delete(Long id) {
+        if (!repo.existsById(id)) {
+            throw new RuntimeException("Cannot delete. User not found with id: " + id);
+        }
+        repo.deleteById(id);
+    }
+
 	
 	
 }

@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,10 +37,33 @@ public class UserController {
         List<UserResponse> responses = service.getAll();
         return ResponseEntity.ok(responses);
     }
+    
+    
+    @GetMapping("/get/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        try {
+            UserResponse response = service.getById(id);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+    
+    
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        try {
+            service.delete(id);
+            return ResponseEntity.ok("User deleted successfully with id: " + id);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
 }
 
 
-
+// // Post:
 //						Complete Flow
 //						
 //						ধরি Client Postman থেকে Request পাঠালো
@@ -109,7 +134,7 @@ public class UserController {
 //						Client
 
 
-
+// //Get All:
 //			GET /api/user/get
 //			│
 //			▼
@@ -141,8 +166,81 @@ public class UserController {
 
 
 
+// //Get By Id:
+//					Example
+//					
+//					Database
+//					
+//					id	                name
+//					1	                Aman
+//					
+//					Request
+//					
+//					GET /user/1
+//					findById(1)
+//					
+//					↓
+//					
+//					Optional(User)
+//					
+//					↓
+//					
+//					orElseThrow()
+//					
+//					↓
+//					
+//					User
+//					
+//					যদি
+//					
+//					GET /user/50
+//					
+//					↓
+//					
+//					findById(50)
+//					
+//					↓
+//					
+//					Optional.empty()
+//					
+//					↓
+//					
+//					orElseThrow()
+//					
+//					↓
+//					
+//					RuntimeException
 
 
+//  //Complete Flow:
+
+//					Controller
+//					│
+//					│ GET /user/5
+//					▼
+//					Service
+//					│
+//					▼
+//					repo.findById(5)
+//					│
+//					▼
+//					Optional<User>
+//					│
+//					├──────────────┐
+//					│              │
+//					User Found      User Not Found
+//					│              │
+//					▼              ▼
+//					User          RuntimeException
+//					│
+//					▼
+//					UserResponse
+//					│
+//					▼
+//					Controller
+//					│
+//					▼
+//					JSON Response
 
 
 
