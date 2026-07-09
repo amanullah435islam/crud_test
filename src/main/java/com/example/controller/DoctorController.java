@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Doctor;
+import com.example.response.DoctorRequest;
+import com.example.response.DoctorResponse;
 import com.example.response.UserResponse;
 import com.example.service.DoctorService;
 
@@ -23,18 +24,21 @@ public class DoctorController {
 	private DoctorService doctorService;
 	
 	@PostMapping("/doctor/save")
-	public Doctor saveDoctor(@RequestBody Doctor doctor) {
-		//return doctorService.create(doctor);
+	public ResponseEntity<DoctorResponse> saveDoctor(@RequestBody DoctorRequest request) {
 		
-		Doctor d = doctorService.create(doctor);		
-		return d;
+		DoctorResponse response = doctorService.create(request);	
+		
+		return ResponseEntity.ok(response);
 	}
 	
 	
 	
 	@GetMapping("/doctor/get")
-	public List<Doctor> getDoctor() {
-		return doctorService.get();
+	public ResponseEntity<List<DoctorResponse>> getDoctor() {
+		
+		List<DoctorResponse> response = doctorService.get();
+		
+		return ResponseEntity.ok(response);
 	}
 	
 	
@@ -42,7 +46,7 @@ public class DoctorController {
 	public ResponseEntity<?> getDoctorById(@PathVariable Long id) {
 
 		 try {
-			 Doctor response = doctorService.getById(id);
+			 DoctorResponse response = doctorService.getById(id);
 	            return ResponseEntity.ok(response);
 	        } catch (RuntimeException e) {
 	            return ResponseEntity.status(404).body(e.getMessage());
@@ -64,8 +68,11 @@ public class DoctorController {
 	
 	 // PUT method to update an existing Doctor by their ID
     @PutMapping("/doctor/update/{id}")
-    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody Doctor DoctorDetails) {
-        Doctor updatedDoctor = doctorService.update(id, DoctorDetails);
+    public ResponseEntity<DoctorResponse> updateDoctor(@PathVariable Long id, @RequestBody DoctorRequest DoctorDetails) {
+        DoctorResponse updatedDoctor = doctorService.update(id, DoctorDetails);
         return ResponseEntity.ok(updatedDoctor);
     }
+    
+    
+    
 }

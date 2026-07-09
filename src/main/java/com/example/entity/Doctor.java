@@ -30,17 +30,6 @@ public class Doctor {
 
 
 
-	public Doctor(Long id, String name, String age, String designation, double salary) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.age = age;
-		this.designation = designation;
-		this.salary = salary;
-	}
-
-
-
 	public Long getId() {
 		return id;
 	}

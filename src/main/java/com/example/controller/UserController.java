@@ -32,11 +32,15 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    
+    
     @GetMapping("/get")
     public ResponseEntity<List<UserResponse>> getAll() {
         List<UserResponse> responses = service.getAll();
         return ResponseEntity.ok(responses);
     }
+    
+    
     
     
     @GetMapping("/get/{id}")
@@ -50,6 +54,8 @@ public class UserController {
     }
     
     
+    
+    
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         try {
@@ -60,188 +66,7 @@ public class UserController {
         }
     }
 
+    
+    
 }
-
-
-// // Post:
-//						Complete Flow
-//						
-//						ধরি Client Postman থেকে Request পাঠালো
-//						
-//						POST
-//						
-//						/api/user/save
-//						
-//						Body
-//						
-//						{
-//						   "name":"Aman",
-//						   "password":"123456"
-//						}
-//						
-//						↓
-//						
-//						Spring
-//						
-//						↓
-//						
-//						@RequestBody
-//						
-//						↓
-//						
-//						UserRequest
-//						
-//						↓
-//						
-//						Controller
-//						
-//						↓
-//						
-//						Service
-//						
-//						↓
-//						
-//						Entity
-//						
-//						User
-//						
-//						↓
-//						
-//						Repository
-//						
-//						↓
-//						
-//						Database
-//						
-//						↓
-//						
-//						Saved User
-//						
-//						↓
-//						
-//						UserResponse
-//						
-//						↓
-//						
-//						Controller
-//						
-//						↓
-//						
-//						ResponseEntity
-//						
-//						↓
-//						
-//						Client
-
-
-// //Get All:
-//			GET /api/user/get
-//			│
-//			▼
-//			Controller
-//			│
-//			▼
-//			service.getAll()
-//			│
-//			▼
-//			Repository.findAll()
-//			│
-//			▼
-//			Database
-//			│
-//			▼
-//			List<User>
-//			│
-//			▼
-//			Convert User → UserResponse
-//			│
-//			▼
-//			List<UserResponse>
-//			│
-//			▼
-//			ResponseEntity.ok(...)
-//			│
-//			▼
-//			HTTP 200 OK + JSON Response
-
-
-
-// //Get By Id:
-//					Example
-//					
-//					Database
-//					
-//					id	                name
-//					1	                Aman
-//					
-//					Request
-//					
-//					GET /user/1
-//					findById(1)
-//					
-//					↓
-//					
-//					Optional(User)
-//					
-//					↓
-//					
-//					orElseThrow()
-//					
-//					↓
-//					
-//					User
-//					
-//					যদি
-//					
-//					GET /user/50
-//					
-//					↓
-//					
-//					findById(50)
-//					
-//					↓
-//					
-//					Optional.empty()
-//					
-//					↓
-//					
-//					orElseThrow()
-//					
-//					↓
-//					
-//					RuntimeException
-
-
-//  //Complete Flow:
-
-//					Controller
-//					│
-//					│ GET /user/5
-//					▼
-//					Service
-//					│
-//					▼
-//					repo.findById(5)
-//					│
-//					▼
-//					Optional<User>
-//					│
-//					├──────────────┐
-//					│              │
-//					User Found      User Not Found
-//					│              │
-//					▼              ▼
-//					User          RuntimeException
-//					│
-//					▼
-//					UserResponse
-//					│
-//					▼
-//					Controller
-//					│
-//					▼
-//					JSON Response
-
-
-
 

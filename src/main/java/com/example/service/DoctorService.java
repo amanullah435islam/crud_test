@@ -1,15 +1,13 @@
 package com.example.service;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.entity.Doctor;
-import com.example.entity.User;
 import com.example.repo.DoctorRepo;
-import com.example.response.UserResponse;
-
+import com.example.response.DoctorRequest;
+import com.example.response.DoctorResponse;
 
 @Service
 public class DoctorService {
@@ -18,28 +16,53 @@ public class DoctorService {
 	private DoctorRepo doctorRepo;
 	
 	
-	public Doctor create(Doctor doctor) {
+	public DoctorResponse create(DoctorRequest request) {
 		
-		return doctorRepo.save(doctor);	
+		Doctor doctor = new Doctor();
 		
+		doctor.setName(request.getName());
+		doctor.setAge(request.getAge());
+		doctor.setDesignation(request.getDesignation());
+		doctor.setSalary(request.getSalary());
 		
-//		Doctor d = doctorRepo.save(doctor);	
-//		System.out.println(d);
-//		return d;
+		Doctor saveDoctor = doctorRepo.save(doctor);
+		
+		return new DoctorResponse(
+				saveDoctor.getId(),
+				saveDoctor.getName(),
+				saveDoctor.getAge(),
+				saveDoctor.getDesignation(),
+				saveDoctor.getSalary()
+				);	
 	}
 	
 	
-	public List<Doctor> get(){
+	public List<DoctorResponse> get(){
 		
-		return  doctorRepo.findAll();
+		return  doctorRepo.findAll().stream()
+							 .map(doctor -> new DoctorResponse(
+															 doctor.getId(),
+															 doctor.getName(),
+															 doctor.getAge(),
+															 doctor.getDesignation(),
+															 doctor.getSalary())
+							   )
+							 .collect(Collectors.toList());
 	}
 	
 	
-	public Doctor getById(Long id) {
+	public DoctorResponse getById(Long id) {
 		
 		Doctor d = doctorRepo.findById(id)
 					.orElseThrow(() -> new RuntimeException("user not found with id: " + id));
-		return d;
+		
+		return new DoctorResponse(
+								d.getId(),
+								d.getName(),
+								d.getAge(),
+								d.getDesignation(),
+								d.getSalary()
+								);
 		
 	}
 	
@@ -56,18 +79,26 @@ public class DoctorService {
 	}
 	
 	
-	public Doctor update(Long id, Doctor doctorDetails) {
-        // Find the existing Doctor or throw an error if they don't exist
+	public DoctorResponse update(Long id, DoctorRequest doctorDetails) {
+        
 		Doctor existingDoctor = doctorRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Doctor not found with id: " + id));
 
-        // Map the incoming update data to the existing database record
+        
         existingDoctor.setName(doctorDetails.getName());
         existingDoctor.setAge(doctorDetails.getAge());
         existingDoctor.setDesignation(doctorDetails.getDesignation());
         existingDoctor.setSalary(doctorDetails.getSalary());
 
-        // Save the updated Doctor record back to the database
-        return doctorRepo.save(existingDoctor);
+        
+        Doctor response = doctorRepo.save(existingDoctor);
+         
+         return new DoctorResponse(
+				        		 response.getId(),
+				        		 response.getName(),
+				        		 response.getAge(),
+				        		 response.getDesignation(),
+				        		 response.getSalary()
+				        		 );
     }
 }
