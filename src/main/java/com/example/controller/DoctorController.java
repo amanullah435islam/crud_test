@@ -66,13 +66,13 @@ public class DoctorController {
 	
 	
 	
-	 // PUT method to update an existing Doctor by their ID
-    @PutMapping("/doctor/update/{id}")
-    public ResponseEntity<DoctorResponse> updateDoctor(@PathVariable Long id, @RequestBody DoctorRequest DoctorDetails) {
-        DoctorResponse updatedDoctor = doctorService.update(id, DoctorDetails);
-        return ResponseEntity.ok(updatedDoctor);
-    }
-    
+
+	@PutMapping("/doctor/update/{id}")
+	public ResponseEntity<DoctorResponse> updateDoctor(@PathVariable Long id, @RequestBody DoctorRequest request) {
+	    DoctorResponse response = doctorService.updateDoctor(id, request);
+	    return ResponseEntity.ok(response);
+	}
+
     
     
 }

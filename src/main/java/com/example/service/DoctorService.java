@@ -78,27 +78,46 @@ public class DoctorService {
 		  
 	}
 	
+
 	
-	public DoctorResponse update(Long id, DoctorRequest doctorDetails) {
-        
-		Doctor existingDoctor = doctorRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Doctor not found with id: " + id));
+	
+	
+	public DoctorResponse updateDoctor(Long id, DoctorRequest request) {
+	    // 1. Find the existing doctor from DB
+	    Doctor existingDoctor = doctorRepo.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Doctor not found with id: " + id));
 
-        
-        existingDoctor.setName(doctorDetails.getName());
-        existingDoctor.setAge(doctorDetails.getAge());
-        existingDoctor.setDesignation(doctorDetails.getDesignation());
-        existingDoctor.setSalary(doctorDetails.getSalary());
+	    // 2. Only update fields if they are provided in the request body
+	    if (request.getName() != null) {
+	        existingDoctor.setName(request.getName());
+	    }
+	    
+	    if (request.getAge() != null) {
+	        existingDoctor.setAge(request.getAge());
+	    }
+	    
+	    if (request.getDesignation() != null) {
+	        existingDoctor.setDesignation(request.getDesignation());
+	    }
+	    
+	    // For primitive double, we check if it's greater than 0 before updating
+	    if (request.getSalary() > 0) {
+	        existingDoctor.setSalary(request.getSalary());
+	    }
 
-        
-        Doctor response = doctorRepo.save(existingDoctor);
-         
-         return new DoctorResponse(
-				        		 response.getId(),
-				        		 response.getName(),
-				        		 response.getAge(),
-				        		 response.getDesignation(),
-				        		 response.getSalary()
-				        		 );
-    }
+	    // 3. Save the modified doctor object back to DB
+	    Doctor updatedDoctor = doctorRepo.save(existingDoctor);
+
+	    // 4. Return converted DoctorResponse DTO
+	    return new DoctorResponse(
+	            updatedDoctor.getId(),
+	            updatedDoctor.getName(),
+	            updatedDoctor.getAge(),
+	            updatedDoctor.getDesignation(),
+	            updatedDoctor.getSalary()
+	    );
+	}
+	
+	
+
 }
