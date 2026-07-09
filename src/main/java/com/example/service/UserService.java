@@ -1,6 +1,7 @@
 package com.example.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,26 @@ public class UserService {
         return repo.findAll().stream()
                 .map(user -> new UserResponse(user.getId(), user.getName()))
                 .collect(Collectors.toList());
+    }
+    
+//    stream() → Collection (List) কে Stream-এ convert করে, যাতে functional operations চালানো যায়।
+//    map() → প্রতিটি element-কে transform বা convert করে। এখানে User → UserResponse।
+//    collect(Collectors.toList()) → Stream-এর result গুলোকে আবার List হিসেবে collect করে return করে।
+    
+    
+    
+    
+//    //same work::::
+    public List<UserResponse> getAll2() {
+    	List<User> users = repo.findAll();
+
+    	List<UserResponse> response = new ArrayList<>();
+    	
+    	for (User user : users) {
+    	    response.add(new UserResponse(user.getId(), user.getName()));
+    	}
+
+    	return response;
     }
     
     
