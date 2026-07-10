@@ -1,9 +1,11 @@
 package com.example.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,11 +18,33 @@ public class User {
 
     private String name;
 
+    private String userName;
+    
     private String password;
 
     
+ // Bi-directional relationship (Optional, dependency maintenance logic-er jonno useful)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Doctor doctor;
+    
+    public Doctor getDoctor() { return doctor; }
+    
+    public void setDoctor(Doctor doctor) { this.doctor = doctor; }
+    
+    
+    
 	public User() {
 		super();
+	}
+
+
+	public User(Long id, String name, String userName, String password, Doctor doctor) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.userName = userName;
+		this.password = password;
+		this.doctor = doctor;
 	}
 
 
@@ -51,6 +75,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

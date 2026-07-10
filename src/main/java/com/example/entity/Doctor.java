@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,8 +25,25 @@ public class Doctor {
 	
 	private double salary;
 
+
+
+
+	@OneToOne
+    @MapsId // central user database er primary key-ke strict bind korbe foreign key hisebe
+    @JoinColumn(name = "user_id")
+    private User user;
 	
-	
+	public User getUser() {
+		return user;
+	}
+
+	 public void setUser(User user) {
+		 this.user = user;
+	 }
+
+	 
+	 
+
 	public Doctor() {
 		super();
 	}

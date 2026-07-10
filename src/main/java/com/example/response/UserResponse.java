@@ -4,9 +4,17 @@ public class UserResponse {
     
 	private Long id;
     private String name;
+    private String userName;
     
     
-    
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public UserResponse() {
 		super();
 	}
@@ -17,6 +25,13 @@ public class UserResponse {
 	}
 
 	
+	public UserResponse(Long id, String name, String userName) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.userName = userName;
+	}
+
 	public Long getId() {
 		return id;
 	}

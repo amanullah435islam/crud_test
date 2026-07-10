@@ -32,13 +32,15 @@ public class UserService {
         User user = new User();
         user.setName(request.getName());
         user.setPassword(request.getPassword()); // Consider using jBcrypt here later!
-
+        user.setUserName(request.getUserName());
+        
         User savedUser = repo.save(user);
 
         // Convert Database Entity -> Response DTO
         return new UserResponse(
                 savedUser.getId(),
-                savedUser.getName()
+                savedUser.getName(),
+                savedUser.getUserName()
         );
     }
 
@@ -49,7 +51,7 @@ public class UserService {
     
     public List<UserResponse> getAll() {
         return repo.findAll().stream()
-                .map(user -> new UserResponse(user.getId(), user.getName()))
+                .map(user -> new UserResponse(user.getId(), user.getName(),user.getUserName()))
                 .collect(Collectors.toList());
     }
     
@@ -83,7 +85,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
         
         // Map Entity to safe Response DTO
-        return new UserResponse(user.getId(), user.getName());
+        return new UserResponse(user.getId(), user.getName(),user.getUserName());
     }
     
     
@@ -94,7 +96,7 @@ public class UserService {
     	User user = repo.findById(id)
     				.orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
-    	return new UserResponse(user.getId(),user.getName());
+    	return new UserResponse(user.getId(),user.getName(),user.getUserName());
     }
     
     

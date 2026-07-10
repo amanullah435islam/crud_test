@@ -4,13 +4,21 @@ public class UserRequest {
 
 	    private String name;
 	    private String password;
-	    
+	    private String userName;
 	    
 		public UserRequest() {
 			super();
 		}
 		
 		
+		public UserRequest(String name, String password, String userName) {
+			super();
+			this.name = name;
+			this.password = password;
+			this.userName = userName;
+		}
+
+
 		public String getName() {
 			return name;
 		}
@@ -22,6 +30,16 @@ public class UserRequest {
 		}
 		public void setPassword(String password) {
 			this.password = password;
+		}
+
+
+		public String getUserName() {
+			return userName;
+		}
+
+
+		public void setUserName(String userName) {
+			this.userName = userName;
 		}
 
 	    

@@ -5,9 +5,14 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.entity.Doctor;
+import com.example.entity.User;
 import com.example.repo.DoctorRepo;
+import com.example.repo.UserRepo;
+import com.example.response.DoctorRegistrationRequest;
 import com.example.response.DoctorRequest;
 import com.example.response.DoctorResponse;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class DoctorService {
@@ -53,17 +58,21 @@ public class DoctorService {
 	
 	public DoctorResponse getById(Long id) {
 		
-		Doctor d = doctorRepo.findById(id)
-					.orElseThrow(() -> new RuntimeException("user not found with id: " + id));
+//		Doctor d = doctorRepo.findById(id)
+//					.orElseThrow(() -> new RuntimeException("user not found with id: " + id));	
+//		return new DoctorResponse(d.getId(),d.getName(),d.getAge(),d.getDesignation(),d.getSalary());
 		
-		return new DoctorResponse(
-								d.getId(),
-								d.getName(),
-								d.getAge(),
-								d.getDesignation(),
-								d.getSalary()
-								);
-		
+		 try { 
+		        Doctor d = doctorRepo.findById(id)
+		                .orElseThrow(() -> new RuntimeException("Doctor data record profile matching identifier validation not found with id: " + id));
+		        
+		        return new DoctorResponse(d.getId(), d.getName(), d.getAge(), d.getDesignation(), d.getSalary());
+		        
+		    } catch (RuntimeException e) {
+		        
+		        System.out.println("Exception logs tracking system event catch trigger message check: " + e.getMessage());
+		        throw e; 
+		    }
 	}
 	
 	
@@ -120,4 +129,36 @@ public class DoctorService {
 	
 	
 
+	
+	
+	
+	
+	
+	
+	@Autowired
+    private UserRepo userRepo; // App state centralized management context logic
+
+    @Transactional
+    public String registerDoctor(DoctorRegistrationRequest dto) {
+        // 1. Core Auth User process binding
+        User user = new User();
+        user.setUserName(dto.getUsername());
+        user.setPassword(dto.getPassword()); // Raw string mapping framework data logic
+
+        // 2. Bound Entity mappings Context
+        Doctor doctor = new Doctor();
+        doctor.setName(dto.getName());
+        doctor.setAge(dto.getAge());
+        doctor.setDesignation(dto.getDesignation());
+        doctor.setSalary(dto.getSalary());
+
+        // 3. Dual side reference linkage logic
+        doctor.setUser(user);
+        user.setDoctor(doctor);
+
+        // 4. Persistence cascade propagation logic
+        userRepo.save(user); // Automatic database level execution sequences
+        
+        return "Doctor centralized dynamic configuration data saved successfully!";
+    }
 }
