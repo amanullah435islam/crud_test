@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import java.util.List;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,64 +27,46 @@ public class PatientController {
 	
 	
 	@PostMapping("/save")
-	public Patient createPatient(@RequestBody Patient patient) {
+	public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
 		
-		return patientService.create(patient);
+		return ResponseEntity.ok(patientService.create(patient));
 	}
 	
 	@GetMapping("/getAll")
-	public List<Patient> getAllPatient() {
+	public ResponseEntity<List<Patient>> getAllPatient() {
 		
 		List<Patient> patient = patientService.getAll();
 		
-		return patient;
+		return ResponseEntity.ok(patient); 
 		
 	}
 	
 	
 	@GetMapping("/get/{id}")
-	public Patient getByPatientId(@PathVariable Long id) {
+	public ResponseEntity<Patient> getByPatientId(@PathVariable Long id) {
 		
-		return patientService.getById(id);
+		return ResponseEntity.ok(patientService.getById(id));
 		
 	}
 	
 	
 	@PutMapping("/update/{id}")
-	public Patient updatePatient(@RequestBody Patient patient, @PathVariable Long id) {
+	public ResponseEntity<Patient> updatePatient(@RequestBody Patient patient, @PathVariable Long id) {
 		
-		return patientService.update(patient, id);
+		return ResponseEntity.ok(patientService.update(patient, id));
 		
 	}
 	
 	
 	@DeleteMapping("/delete/{id}")
-	public void deletePatient(@PathVariable Long id) {
+	public ResponseEntity<String> deletePatient(@PathVariable Long id) {
 		
 		patientService.delete(id);
+		
+		return ResponseEntity.ok("Delete Successfully.");
 	}
 	
 	
 }
 
-
-
-//	//MORE PROFESSIONAL:
-				//
-				//@PostMapping
-				//public ResponseEntity<Patient> create(@RequestBody Patient patient)
-				//
-				//@GetMapping
-				//public ResponseEntity<List<Patient>> getAll()
-				//
-				//@GetMapping("/{id}")
-				//public ResponseEntity<Patient> getById(@PathVariable Long id)
-				//
-				//@PutMapping("/{id}")
-				//public ResponseEntity<Patient> update(@PathVariable Long id,
-				//                                      @RequestBody Patient patient)
-				//
-				//@DeleteMapping("/{id}")
-				//public ResponseEntity<Void> delete(@PathVariable Long id)
-				//
 
