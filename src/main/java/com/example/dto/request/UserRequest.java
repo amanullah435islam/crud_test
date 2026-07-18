@@ -1,4 +1,4 @@
-package com.example.response;
+package com.example.dto.request;
 
 public class UserRequest {
 

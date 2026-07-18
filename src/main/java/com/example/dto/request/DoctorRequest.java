@@ -1,20 +1,18 @@
-package com.example.response;
+package com.example.dto.request;
 
-public class DoctorResponse {
+public class DoctorRequest {
 	
-	    private Long id;
 	    private String name;
 	    private String age;
 	    private String designation;
 	    private double salary;
 
 	    // Default Constructor
-	    public DoctorResponse() {
+	    public DoctorRequest() {
 	    }
 
 	    // All Arguments Constructor
-	    public DoctorResponse(Long id, String name, String age, String designation, double salary) {
-	        this.id = id;
+	    public DoctorRequest(String name, String age, String designation, double salary) {
 	        this.name = name;
 	        this.age = age;
 	        this.designation = designation;
@@ -22,9 +20,6 @@ public class DoctorResponse {
 	    }
 
 	    // Getters and Setters
-	    public Long getId() { return id; }
-	    public void setId(Long id) { this.id = id; }
-
 	    public String getName() { return name; }
 	    public void setName(String name) { this.name = name; }
 

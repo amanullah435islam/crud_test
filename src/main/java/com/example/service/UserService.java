@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.example.dto.request.UserRequest;
+import com.example.dto.response.UserResponse;
 import com.example.entity.User;
 import com.example.repo.UserRepo;
-import com.example.response.UserRequest;
-import com.example.response.UserResponse;
 
 @Service
 public class UserService {

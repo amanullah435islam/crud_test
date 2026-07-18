@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.response.DoctorRegistrationRequest;
-import com.example.response.DoctorRequest;
-import com.example.response.DoctorResponse;
+import com.example.dto.request.DoctorRegistrationRequest;
+import com.example.dto.request.DoctorRequest;
+import com.example.dto.response.DoctorResponse;
 import com.example.service.DoctorService;
 
 @RestController

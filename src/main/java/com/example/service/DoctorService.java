@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.dto.request.DoctorRegistrationRequest;
+import com.example.dto.request.DoctorRequest;
+import com.example.dto.response.DoctorResponse;
 import com.example.entity.Doctor;
 import com.example.entity.User;
 import com.example.repo.DoctorRepo;
 import com.example.repo.UserRepo;
-import com.example.response.DoctorRegistrationRequest;
-import com.example.response.DoctorRequest;
-import com.example.response.DoctorResponse;
 
 import jakarta.transaction.Transactional;
 

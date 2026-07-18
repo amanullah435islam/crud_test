@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.dto.request.UserRequest;
+import com.example.dto.response.UserResponse;
 import com.example.entity.User;
-import com.example.response.UserRequest;
-import com.example.response.UserResponse;
 import com.example.service.UserService;
 
 @RestController
