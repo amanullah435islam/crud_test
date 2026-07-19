@@ -39,9 +39,9 @@ public class PatientController {
 	
 	
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Patient>> getAllPatient() {
+	public ResponseEntity<List<PatientResponse>> getAllPatient() {
 		
-		List<Patient> patient = patientService.getAll();
+		List<PatientResponse> patient = patientService.getAll2();
 		
 		return ResponseEntity.ok(patient); 
 		
