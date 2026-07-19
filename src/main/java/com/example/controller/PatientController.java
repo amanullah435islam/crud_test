@@ -45,43 +45,47 @@ public class PatientController {
 	
 	
 	@GetMapping("/get/{id}")
-	public Patient getById(@PathVariable Long id) {
-	    return patientService.getById(id);
+	public ResponseEntity<Patient> getById(@PathVariable Long id) {
+		Patient patient = patientService.getById(id);
+		return ResponseEntity.ok(patient);
 	}
-	
-//	or:
-	@GetMapping("/get2/{id}")
-	public ResponseEntity<?> getByPatientIdMain(@PathVariable Long id) {
 		
+	
+	@PutMapping("/update/{id}")
+	public ResponseEntity<?> updatePatient(@RequestBody Patient patient, @PathVariable Long id) {
 		
 		
 		try {
-			Patient patient = patientService.getById(id);
-			return ResponseEntity.ok(patient);
-		} catch (Exception e) {
+			return ResponseEntity.ok(patientService.update(patient, id));
+			
+		} catch (RuntimeException e) {
+			
 			return ResponseEntity
-					.status(HttpStatus.NOT_FOUND)
-					.body(e.getMessage());
 					
+					.status(HttpStatus.NOT_FOUND)
+					
+					.body(e.getMessage());
 		}
-		
-	}
-	
-	
-	@PutMapping("/update/{id}")
-	public ResponseEntity<Patient> updatePatient(@RequestBody Patient patient, @PathVariable Long id) {
-		
-		return ResponseEntity.ok(patientService.update(patient, id));
-		
 	}
 	
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deletePatient(@PathVariable Long id) {
+	public ResponseEntity<?> deletePatient(@PathVariable Long id) {
 		
-		patientService.delete(id);
+		try {
+			patientService.Delete(id);
+			
+			return ResponseEntity.ok("Delete Successfully.");
+			
+		} catch (RuntimeException e) {
+			
+			return ResponseEntity
+					
+					.status(HttpStatus.NOT_FOUND)
+					
+					.body(e.getMessage());
+		}
 		
-		return ResponseEntity.ok("Delete Successfully.");
 	}
 	
 	

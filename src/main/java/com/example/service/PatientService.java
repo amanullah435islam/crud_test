@@ -1,11 +1,7 @@
 package com.example.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
-import com.example.customException.GlobalExceptionHandler;
 import com.example.customException.ResourceNotFoundException;
 import com.example.entity.Patient;
 import com.example.repo.PatientRepo;
@@ -63,15 +59,6 @@ public class PatientService {
 		
 	}
 	
-	
-	public void delete(Long id) {
-		
-		Patient patient = patientRepo.findById(id)
-				.orElseThrow(() -> new RuntimeException("patient not found with id : " + id));	
-
-		 patientRepo.delete(patient);
-		
-	}	
 	
 	public Patient Delete(Long id) {
 
