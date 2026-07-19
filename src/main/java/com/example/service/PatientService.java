@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.customException.ResourceNotFoundException;
 import com.example.dto.request.PatientRequest;
+import com.example.dto.response.PatientResponse;
 import com.example.entity.Patient;
 import com.example.repo.PatientRepo;
 
@@ -18,7 +19,7 @@ public class PatientService {
 	}
 	
 	
-	public Patient create(PatientRequest patient) {
+	public PatientResponse create(PatientRequest patient) {
 		
 		Patient p = new Patient();
 		
@@ -28,7 +29,17 @@ public class PatientService {
 		p.setGender(patient.getGender());
 		p.setDescription(patient.getDescription());
 		
-		return patientRepo.save(p);
+		Patient savepatient = patientRepo.save(p);
+		
+		return new PatientResponse(
+				
+				savepatient.getId(),
+				savepatient.getName(),
+				savepatient.getAge(),
+				savepatient.getGender(),
+				savepatient.getAddress(),
+				savepatient.getDescription()				
+				);
 	}
 	
 	
