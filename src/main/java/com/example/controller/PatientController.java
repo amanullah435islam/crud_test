@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dto.request.PatientRequest;
 import com.example.entity.Patient;
 import com.example.service.PatientService;
 
@@ -29,10 +30,12 @@ public class PatientController {
 	
 	
 	@PostMapping("/save")
-	public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
+	public ResponseEntity<Patient> createPatient(@RequestBody PatientRequest patient) {
 		
 		return ResponseEntity.ok(patientService.create(patient));
 	}
+	
+	
 	
 	@GetMapping("/getAll")
 	public ResponseEntity<List<Patient>> getAllPatient() {

@@ -3,6 +3,7 @@ package com.example.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.customException.ResourceNotFoundException;
+import com.example.dto.request.PatientRequest;
 import com.example.entity.Patient;
 import com.example.repo.PatientRepo;
 
@@ -17,11 +18,17 @@ public class PatientService {
 	}
 	
 	
-	public Patient create(Patient patient) {
+	public Patient create(PatientRequest patient) {
 		
-		Patient p = patientRepo.save(patient);
+		Patient p = new Patient();
 		
-		return p;
+		p.setName(patient.getName());
+		p.setAge(patient.getAge());
+		p.setAddress(patient.getAddress());
+		p.setGender(patient.getGender());
+		p.setDescription(patient.getDescription());
+		
+		return patientRepo.save(p);
 	}
 	
 	
@@ -44,30 +51,16 @@ public class PatientService {
 	
 	public Patient update(Patient patient, Long id) {
 		
-		Patient existingPatient = patientRepo.findById(id)
+		Patient patientExisting = patientRepo.findById(id)
 		.orElseThrow(() -> new RuntimeException("patient not found with id : " + id));		
 		
-		if (patient.getName() != null) {
-		    existingPatient.setName(patient.getName());
-		}
-
-		if (patient.getGender() != null) {
-		    existingPatient.setGender(patient.getGender());
-		}
-
-		if (patient.getAddress() != null) {
-		    existingPatient.setAddress(patient.getAddress());
-		}
-
-		if (patient.getAge() != null) {
-		    existingPatient.setAge(patient.getAge());
-		}
-
-		if (patient.getDescription() != null) {
-		    existingPatient.setDescription(patient.getDescription());
-		}	
+		patientExisting.setName(patient.getName());
+		patientExisting.setAge(patient.getAge());
+		patientExisting.setGender(patient.getGender());
+		patientExisting.setAddress(patient.getAddress());
+		patientExisting.setDescription(patient.getDescription());	
 		
-		Patient p = patientRepo.save(existingPatient);
+		Patient p = patientRepo.save(patientExisting);
 		
 		return p;
 		
