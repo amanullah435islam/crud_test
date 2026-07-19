@@ -65,71 +65,63 @@ public class PatientService {
 	}
 	
 	
-	
-//	get all alternative / or :
-	
-	
-	private PatientResponse mapToResponse(Patient patient) {
 
-	    PatientResponse response = new PatientResponse();
-
-	    response.setId(patient.getId());
-	    response.setName(patient.getName());
-	    response.setAge(patient.getAge());
-	    response.setGender(patient.getGender());
-	    response.setAddress(patient.getAddress());
-	    response.setDescription(patient.getDescription());
-
-	    return response;
-	}
 	
-	
-	
-	public List<PatientResponse> getAll2() {
-
-	    List<Patient> patients = patientRepo.findAll();
-
-	    List<PatientResponse> responses = new ArrayList<>();
-
-	    for (Patient patient : patients) {
-
-	        PatientResponse response = mapToResponse(patient);
-
-	        responses.add(response);
-	    }
-
-	    return responses;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	public Patient getById(Long id) {
+	public PatientResponse getById(Long id) {
 		
-		return patientRepo.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("patient not found with id : " + id));			
+		Patient patient = patientRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("patient not found with id : " + id));	
+		
+		return new PatientResponse( patient.getId(),patient.getName(),
+        		
+        		patient.getAge(),patient.getGender(),
+        		
+        		patient.getAddress(),patient.getDescription()
+        		
+				);
 	}
 	
 	
 	
-	public Patient update(PatientRequest patient, Long id) {
+	public PatientResponse update(PatientRequest patient, Long id) {
 		
 		Patient patientExisting = patientRepo.findById(id)
 		.orElseThrow(() -> new RuntimeException("patient not found with id : " + id));		
 		
-		patientExisting.setName(patient.getName());
-		patientExisting.setAge(patient.getAge());
-		patientExisting.setGender(patient.getGender());
-		patientExisting.setAddress(patient.getAddress());
-		patientExisting.setDescription(patient.getDescription());	
+		if (patient.getName() != null) {
+			patientExisting.setName(patient.getName());
+		}
+		
+		
+		if (patient.getAge() != null) {
+			patientExisting.setAge(patient.getAge());
+		}
+		
+		
+		if (patient.getGender() != null) {
+			patientExisting.setGender(patient.getGender());
+		}
+		
+		
+		if (patient.getAddress() != null) {
+			patientExisting.setAddress(patient.getAddress());
+		}
+		
+		
+		if (patient.getDescription() != null) {
+			patientExisting.setDescription(patient.getDescription());	
+		}
+		
 		
 		Patient p = patientRepo.save(patientExisting);
 		
-		return p;
+		return new PatientResponse( p.getId(),p.getName(),
+        		
+        		p.getAge(),p.getGender(),
+        		
+        		p.getAddress(),p.getDescription()
+        		
+				);
 		
 	}
 	

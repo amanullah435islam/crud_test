@@ -41,7 +41,7 @@ public class PatientController {
 	@GetMapping("/getAll")
 	public ResponseEntity<List<PatientResponse>> getAllPatient() {
 		
-		List<PatientResponse> patient = patientService.getAll2();
+		List<PatientResponse> patient = patientService.getAll();
 		
 		return ResponseEntity.ok(patient); 
 		
@@ -49,8 +49,8 @@ public class PatientController {
 	
 	
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Patient> getById(@PathVariable Long id) {
-		Patient patient = patientService.getById(id);
+	public ResponseEntity<PatientResponse> getById(@PathVariable Long id) {
+		PatientResponse patient = patientService.getById(id);
 		return ResponseEntity.ok(patient);
 	}
 		
