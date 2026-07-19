@@ -44,16 +44,30 @@ public class PatientService {
 	
 	public Patient update(Patient patient, Long id) {
 		
-		Patient patientExisting = patientRepo.findById(id)
+		Patient existingPatient = patientRepo.findById(id)
 		.orElseThrow(() -> new RuntimeException("patient not found with id : " + id));		
 		
-		patientExisting.setName(patient.getName());
-		patientExisting.setAge(patient.getAge());
-		patientExisting.setGender(patient.getGender());
-		patientExisting.setAddress(patient.getAddress());
-		patientExisting.setDescription(patient.getDescription());	
+		if (patient.getName() != null) {
+		    existingPatient.setName(patient.getName());
+		}
+
+		if (patient.getGender() != null) {
+		    existingPatient.setGender(patient.getGender());
+		}
+
+		if (patient.getAddress() != null) {
+		    existingPatient.setAddress(patient.getAddress());
+		}
+
+		if (patient.getAge() != null) {
+		    existingPatient.setAge(patient.getAge());
+		}
+
+		if (patient.getDescription() != null) {
+		    existingPatient.setDescription(patient.getDescription());
+		}	
 		
-		Patient p = patientRepo.save(patientExisting);
+		Patient p = patientRepo.save(existingPatient);
 		
 		return p;
 		
@@ -63,7 +77,7 @@ public class PatientService {
 	public Patient Delete(Long id) {
 
 	    Patient patient = patientRepo.findById(id)
-	            .orElseThrow(() -> new RuntimeException("Patient not found with id: " + id));
+	            .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + id));
 
 	    patientRepo.delete(patient);
 

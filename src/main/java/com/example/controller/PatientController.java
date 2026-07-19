@@ -70,21 +70,14 @@ public class PatientController {
 	
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deletePatient(@PathVariable Long id) {
+	public ResponseEntity<String> deletePatient(@PathVariable Long id) {
 		
-		try {
+	
 			patientService.Delete(id);
 			
 			return ResponseEntity.ok("Delete Successfully.");
 			
-		} catch (RuntimeException e) {
-			
-			return ResponseEntity
-					
-					.status(HttpStatus.NOT_FOUND)
-					
-					.body(e.getMessage());
-		}
+		
 		
 	}
 	
