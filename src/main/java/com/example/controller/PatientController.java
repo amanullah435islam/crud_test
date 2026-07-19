@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +48,15 @@ public class PatientController {
 	public ResponseEntity<Patient> getByPatientId(@PathVariable Long id) {
 		
 		return ResponseEntity.ok(patientService.getById(id));
+		
+	}
+	
+	
+//	//or :(using optional)
+	@GetMapping("/Get/{id}")
+	public ResponseEntity<Optional<Patient>> getByPatientID(@PathVariable Long id) {
+		
+		return ResponseEntity.ok(patientService.getByID(id));
 		
 	}
 	
