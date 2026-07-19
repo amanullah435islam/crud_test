@@ -37,41 +37,15 @@ public class PatientService {
 	
 	
 	public Patient getById(Long id) {
-		Patient patient = null;
 		
-		try {
-			
-			patient = patientRepo.findById(id)
-					.orElseThrow(() -> new RuntimeException("patient not found with id : " + id));
-		
-		} catch (Exception e) {
-			
-			System.out.println(e.getMessage());
-		}
-		
-		return 	patient;		
+		return patientRepo.findById(id)
+				.orElseThrow(() -> new RuntimeException("patient not found with id : " + id));			
 	}
 	
-	
-	
-//	// or: (handle it)
 	public Optional<Patient> getByID(Long id) {
 		
-		Optional<Patient> patient = java.util.Optional.empty();
-		try {
-			
-			 patient =  patientRepo.findById(id);	
-		
-			return patient;	
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			
-			
-		}
-			
-		
-		return patient;			
+		return patientRepo.findById(id);
+						
 	}
 	
 	
