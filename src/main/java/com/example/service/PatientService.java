@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.customException.GlobalExceptionHandler;
+import com.example.customException.ResourceNotFoundException;
 import com.example.entity.Patient;
 import com.example.repo.PatientRepo;
 
@@ -39,14 +41,9 @@ public class PatientService {
 	public Patient getById(Long id) {
 		
 		return patientRepo.findById(id)
-				.orElseThrow(() -> new RuntimeException("patient not found with id : " + id));			
+				.orElseThrow(() -> new ResourceNotFoundException("patient not found with id : " + id));			
 	}
 	
-	public Optional<Patient> getByID(Long id) {
-		
-		return patientRepo.findById(id);
-						
-	}
 	
 	
 	public Patient update(Patient patient, Long id) {

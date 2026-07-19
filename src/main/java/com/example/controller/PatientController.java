@@ -1,10 +1,8 @@
 package com.example.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +45,13 @@ public class PatientController {
 	
 	
 	@GetMapping("/get/{id}")
-	public ResponseEntity<?> getByPatientId(@PathVariable Long id) {
+	public Patient getById(@PathVariable Long id) {
+	    return patientService.getById(id);
+	}
+	
+//	or:
+	@GetMapping("/get2/{id}")
+	public ResponseEntity<?> getByPatientIdMain(@PathVariable Long id) {
 		
 		
 		
@@ -63,29 +67,6 @@ public class PatientController {
 		
 	}
 	
-	@GetMapping("/Get2/{id}")
-	public ResponseEntity<Patient> getByPatientID2(@PathVariable Long id) {
-		
-	    return patientService.getByID(id)
-	    		
-	            .map(ResponseEntity::ok)
-	            
-	            .orElseGet(() -> ResponseEntity.notFound().build());
-	}
-
-
-
-	@GetMapping("/Get/{id}")
-	    public ResponseEntity<?>  getByPatientID(@PathVariable Long id) {
-		
-	        return patientService.getByID(id)
-	        		
-	        					 .map(ResponseEntity::ok)
-	        					 
-	        					 .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
-	        
-	    }
-
 	
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Patient> updatePatient(@RequestBody Patient patient, @PathVariable Long id) {
