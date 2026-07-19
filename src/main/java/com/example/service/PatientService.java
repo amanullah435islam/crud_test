@@ -49,7 +49,7 @@ public class PatientService {
 	
 	
 	
-	public Patient update(Patient patient, Long id) {
+	public Patient update(PatientRequest patient, Long id) {
 		
 		Patient patientExisting = patientRepo.findById(id)
 		.orElseThrow(() -> new RuntimeException("patient not found with id : " + id));		
