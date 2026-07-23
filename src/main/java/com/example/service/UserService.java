@@ -1,117 +1,18 @@
 package com.example.service;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-
-import com.example.dto.request.UserRequest;
-import com.example.dto.response.UserResponse;
 import com.example.entity.User;
-import com.example.repo.UserRepo;
+import java.util.List;
+import java.util.Optional;
 
-@Service
-public class UserService {
 
-	private final UserRepo repo;
+public interface UserService {
 
-    // Construction injection is preferred over @Autowired for modern Java 21 apps
-    public UserService(UserRepo repo) {
-        this.repo = repo;
-    }
+    User save(User user) ;
 
-    
-    
-    
-    public UserResponse create(UserRequest request) {
-        // Convert Request DTO -> Database Entity
-        User user = new User();
-        user.setName(request.getName());
-        user.setPassword(request.getPassword()); // Consider using jBcrypt here later!
-        user.setUserName(request.getUserName());
-        
-        User savedUser = repo.save(user);
+    List<User> getAll() ;
 
-        // Convert Database Entity -> Response DTO
-        return new UserResponse(
-                savedUser.getId(),
-                savedUser.getName(),
-                savedUser.getUserName()
-        );
-    }
+    Optional<User> getById(Long id) ;
 
-    
-    
-    
-    
-    
-    public List<UserResponse> getAll() {
-        return repo.findAll().stream()
-                .map(user -> new UserResponse(user.getId(), user.getName(),user.getUserName()))
-                .collect(Collectors.toList());
-    }
-    
-//    stream() → Collection (List) কে Stream-এ convert করে, যাতে functional operations চালানো যায়।
-//    map() → প্রতিটি element-কে transform বা convert করে। এখানে User → UserResponse।
-//    collect(Collectors.toList()) → Stream-এর result গুলোকে আবার List হিসেবে collect করে return করে।
-    
-    
-    
-    
-//    //same work::::
-    public List<UserResponse> getAll2() {
-    	List<User> users = repo.findAll();
+    void delete(Long id) ;
 
-    	List<UserResponse> response = new ArrayList<>();
-    	
-    	for (User user : users) {
-    	    response.add(new UserResponse(user.getId(), user.getName()));
-    	}
-
-    	return response;
-    }
-    
-    
-    
-    
-    
-    
-    public UserResponse getById(Long id) {
-        User user = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-        
-        // Map Entity to safe Response DTO
-        return new UserResponse(user.getId(), user.getName(),user.getUserName());
-    }
-    
-    
-    
-    
-    public UserResponse getById2(Long id) {
-    	
-    	User user = repo.findById(id)
-    				.orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-
-    	return new UserResponse(user.getId(),user.getName(),user.getUserName());
-    }
-    
-    
-    
-    
-    
-    
-    
-    public void delete(Long id) {
-        if (!repo.existsById(id)) {
-            throw new RuntimeException("Cannot delete. User not found with id: " + id);
-        }
-        repo.deleteById(id);
-    }
-
-	
-	
 }

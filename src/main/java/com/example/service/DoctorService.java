@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.dto.request.DoctorRegistrationRequest;
+import com.example.dto.request.DoctorRegistrationDTO;
 import com.example.dto.request.DoctorRequest;
 import com.example.dto.response.DoctorResponse;
 import com.example.entity.Doctor;
@@ -136,30 +136,30 @@ public class DoctorService {
 	
 	
 	
-	@Autowired
-    private UserRepo userRepo; // App state centralized management context logic
+//	@Autowired
+//    private UserRepo userRepo; // App state centralized management context logic
 
-    @Transactional
-    public String registerDoctor(DoctorRegistrationRequest dto) {
-        // 1. Core Auth User process binding
-        User user = new User();
-        user.setUserName(dto.getUsername());
-        user.setPassword(dto.getPassword()); // Raw string mapping framework data logic
-
-        // 2. Bound Entity mappings Context
-        Doctor doctor = new Doctor();
-        doctor.setName(dto.getName());
-        doctor.setAge(dto.getAge());
-        doctor.setDesignation(dto.getDesignation());
-        doctor.setSalary(dto.getSalary());
-
-        // 3. Dual side reference linkage logic
-        doctor.setUser(user);
-        user.setDoctor(doctor);
-
-        // 4. Persistence cascade propagation logic
-        userRepo.save(user); // Automatic database level execution sequences
-        
-        return "Doctor centralized dynamic configuration data saved successfully!";
-    }
+//    @Transactional
+//    public String registerDoctor(DoctorRegistrationDTO dto) {
+//        // 1. Core Auth User process binding
+//        User user = new User();
+//        user.setEmail(dto.getUsername());
+//        user.setPassword(dto.getPassword()); // Raw string mapping framework data logic
+//
+//        // 2. Bound Entity mappings Context
+//        Doctor doctor = new Doctor();
+//        doctor.setName(dto.getName());
+//        doctor.setAge(dto.getAge());
+//        doctor.setDesignation(dto.getDesignation());
+//        doctor.setSalary(dto.getSalary());
+//
+//        // 3. Dual side reference linkage logic
+//        doctor.setUser(user);
+//        user.setDoctor(doctor);
+//
+//        // 4. Persistence cascade propagation logic
+//        userRepo.save(user); // Automatic database level execution sequences
+//
+//        return "Doctor centralized dynamic configuration data saved successfully!";
+//    }
 }

@@ -1,6 +1,5 @@
 package com.example.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.example.customException.ResourceNotFoundException;
 import com.example.dto.request.PatientRequest;
 import com.example.dto.response.PatientResponse;
-import com.example.dto.response.UserResponse;
 import com.example.entity.Patient;
 import com.example.repo.PatientRepo;
 

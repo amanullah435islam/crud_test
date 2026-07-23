@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.dto.request.DoctorRegistrationRequest;
+import com.example.dto.request.DoctorRegistrationDTO;
 import com.example.dto.request.DoctorRequest;
 import com.example.dto.response.DoctorResponse;
 import com.example.service.DoctorService;
@@ -99,10 +99,10 @@ public class DoctorController {
     
     
 	
-	// POST endpoint to handle simultaneous registration (User) and profile (Doctor) creation
-    @PostMapping("doctor/register")
-    public ResponseEntity<String> registerDoctor(@RequestBody DoctorRegistrationRequest registrationRequest) {
-        String resultMessage = doctorService.registerDoctor(registrationRequest);
-        return new ResponseEntity<>(resultMessage, HttpStatus.CREATED);
-    }
+//	// POST endpoint to handle simultaneous registration (User) and profile (Doctor) creation
+//    @PostMapping("doctor/register")
+//    public ResponseEntity<String> registerDoctor(@RequestBody DoctorRegistrationDTO registrationRequest) {
+//        String resultMessage = doctorService.registerDoctor(registrationRequest);
+//        return new ResponseEntity<>(resultMessage, HttpStatus.CREATED);
+//    }
 }

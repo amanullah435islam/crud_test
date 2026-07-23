@@ -1,13 +1,6 @@
 package com.example.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "doctors")
@@ -26,13 +19,12 @@ public class Doctor {
 	private double salary;
 
 
+	// Auth account — name, phone, email, password, role=AGENT lives here
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 
 
-	@OneToOne
-    @MapsId // central user database er primary key-ke strict bind korbe foreign key hisebe
-    @JoinColumn(name = "user_id")
-    private User user;
-	
 	public User getUser() {
 		return user;
 	}
