@@ -69,7 +69,6 @@ if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 }
 
 
-
         // ============================================================
         // STEP 3: Extract JWT token
         //

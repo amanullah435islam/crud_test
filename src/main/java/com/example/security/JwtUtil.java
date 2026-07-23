@@ -5,6 +5,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -19,7 +20,7 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    @Value("${jwt.expiration}")
+    @Value("${jwt.verification-expiration}")
     private Long verificationExpiration;
 
     @Value("${jwt.reset-expiration}")
@@ -130,15 +131,19 @@ public class JwtUtil {
         }
     }
 
+
+
+
+
 //    public boolean isTokenValid(String token, UserDetails userDetails) {
 //        final String username = extractEmail(token);
 //        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
 //    }
 
 
-//    private boolean isTokenExpired(String token) {
-//        return getClaims(token).getExpiration().before(new Date());
-//    }
+    private boolean isTokenExpired(String token) {
+        return getClaims(token).getExpiration().before(new Date());
+    }
 
 
 

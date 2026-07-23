@@ -8,6 +8,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +48,14 @@ public class EmailService {
     // ── Email verification ───────────────────────────────────────
     public void sendVerificationEmail(String to, String name, String token) throws MessagingException {
 
-        String link = frontendUrl + "/verify-email?token=" + token;
+        String encodedToken =
+                URLEncoder.encode(token, StandardCharsets.UTF_8);
+
+        String link =
+                frontendUrl + "/verify-email?token=" + encodedToken;
+
+
+      //  String link = frontendUrl + "/verify-email?token=" + token;
 
         String body = """
                 <!DOCTYPE html>

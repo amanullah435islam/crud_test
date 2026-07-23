@@ -5,7 +5,6 @@ import com.example.dto.request.ForgotPasswordRequestDTO;
 import com.example.dto.request.LoginRequestDTO;
 import com.example.dto.request.ResetPasswordRequestDTO;
 import com.example.dto.response.LoginResponseDTO;
-import com.example.dto.response.RegisterResponseDTO;
 import com.example.entity.Doctor;
 import com.example.entity.User;
 import com.example.enums.Role;
@@ -168,16 +167,6 @@ private final DoctorRepo doctorRepo;
                     // If doctor found
                     .ifPresent(doctor -> {
 
-                        // If hub assigned
-//                        if (doctor.getHub() != null) {
-//
-//                            // Add hub details to response
-//                            response.setHubId(
-//                                    doctor.getHub().getId());
-//
-//                            response.setHubName(
-//                                    doctor.getHub().getName());
-//                        }
                     });
     }
 
@@ -278,169 +267,72 @@ private final DoctorRepo doctorRepo;
 
 
 //    // Extra this is my code here:
-
-//public RegisterResponseDTO registerDoctor(DoctorRegistrationDTO dto){
 @Transactional
-public void registerDoctor(DoctorRegistrationDTO dto){
-
-
-    // Check email duplicate
+public String registerDoctor(DoctorRegistrationDTO dto){
 
     if(userRepository.existsByEmail(dto.getEmail())){
-        throw new RuntimeException(
-                "Email already exists"
-        );
+        throw new RuntimeException("Email already exists");
     }
-
-
-    // Check phone duplicate
-
-    if(userRepository.existsByPhone(dto.getPhone())){
-        throw new RuntimeException(
-                "Phone already exists"
-        );
-    }
-
-
-
-    /*
-        STEP 1:
-        Create User Account
-    */
 
 
     User user = new User();
 
-
     user.setName(dto.getName());
-
     user.setEmail(dto.getEmail());
-
     user.setPhone(dto.getPhone());
 
-
     user.setPassword(
-            encoder.encode(
-                    dto.getPassword()
-            )
+            encoder.encode(dto.getPassword())
     );
-
 
     user.setRole(Role.DOCTOR);
 
-
-//     // Email verification pending :
-
-//    when admin permission setup than setActive "false"
     user.setActive(false);
-//    user.setActive(true);
 
-
-
-    // Save user first
 
     userRepository.save(user);
 
 
 
-
-    /*
-        STEP 2:
-        Create Doctor Profile
-    */
-
-
     Doctor doctor = new Doctor();
 
-
-    doctor.setName(
-            dto.getName()
-    );
-
-
-    doctor.setAge(
-            dto.getAge()
-    );
-
-
-    doctor.setDesignation(
-            dto.getDesignation()
-    );
-
-
-    doctor.setSalary(
-            dto.getSalary()
-    );
-
-
-
-    /*
-        Important:
-        User and Doctor connection
-    */
+    doctor.setName(dto.getName());
+    doctor.setAge(dto.getAge());
+    doctor.setDesignation(dto.getDesignation());
+    doctor.setSalary(dto.getSalary());
 
     doctor.setUser(user);
 
 
-
-    // Save doctor
-
     doctorRepo.save(doctor);
 
-//    console check temporary code:
-
-//    System.out.println(
-//            encoder.matches(
-//                    dto.getPassword(),
-//                    user.getPassword()
-//            )
-//    );
 
 
+    // Generate verification token
+
+    String token =
+            jwtUtil.generateVerificationToken(
+                    user.getEmail()
+            );
 
 
+    try {
+
+        emailService.sendVerificationEmail(
+                user.getEmail(),
+                user.getName(),
+                token
+        );
+
+    } catch (MessagingException e){
+
+        throw new RuntimeException(
+                "Email sending failed"
+        );
+    }
 
 
-    // ==========================
-    // EMAIL VERIFICATION
-    // ==========================
-
-// // this code are email into token after Ragistration(professional way)
-
-//    String token =
-//            jwtUtil.generateVerificationToken(
-//                    user.getEmail()
-//            );
-//
-//
-//    try {
-//
-//        emailService.sendVerificationEmail(
-//                user.getEmail(),
-//                user.getName(),
-//                token
-//        );
-//
-//    } catch(MessagingException e){
-//
-//        throw new RuntimeException(
-//                "Email sending failed"
-//        );
-//    }
-
-
-
-
-// // this code are show token, the postman console after Ragistration(just postman check)
-
-//    String token = jwtUtil.generateVerificationToken(user.getEmail());
-//
-//    RegisterResponseDTO response = new RegisterResponseDTO();
-//
-//    response.setMessage("Registration successful");
-//    response.setVerificationToken(token);
-//
-//return response;
+    return token;
 
 }
 

@@ -5,11 +5,12 @@ import com.example.dto.request.ForgotPasswordRequestDTO;
 import com.example.dto.request.LoginRequestDTO;
 import com.example.dto.request.ResetPasswordRequestDTO;
 import com.example.dto.response.LoginResponseDTO;
-import com.example.dto.response.RegisterResponseDTO;
 import com.example.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -20,28 +21,22 @@ public class AuthController {
 
 // // this code are email into token after Ragistration(professional way)
 
-    @PostMapping("/register/doctor")
-    public ResponseEntity<String> registerDoctor(
-            @RequestBody DoctorRegistrationDTO dto
-    ){
+    @PostMapping("/doctor/register")
+public ResponseEntity<?> registerDoctor(
+        @RequestBody DoctorRegistrationDTO dto
+){
+    String token = authService.registerDoctor(dto);
+    return ResponseEntity.ok(
+            Map.of(
+                    "message",
+                    "Doctor registered successfully",
 
-        authService.registerDoctor(dto);
+                    "verificationToken",
+                    token
+            )
+    );
 
-
-        return ResponseEntity.ok(
-                "Doctor registration successful"
-        );
-    }
-
-
-// // this code are show token, the postman console after Ragistration(just postman check)
-//    @PostMapping("/register/doctor")
-//    public ResponseEntity<RegisterResponseDTO> register(
-//            @RequestBody DoctorRegistrationDTO dto
-//    ){
-//
-//        return ResponseEntity.ok(authService.registerDoctor(dto));
-//    }
+}
 
     // POST /api/auth/login
     @PostMapping("/login")
