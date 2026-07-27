@@ -46,12 +46,13 @@ public class DoctorService {
 	public List<DoctorResponse> get(){
 		
 		return  doctorRepo.findAll().stream()
-							 .map(doctor -> new DoctorResponse(
-															 doctor.getId(),
-															 doctor.getName(),
-															 doctor.getAge(),
-															 doctor.getDesignation(),
-															 doctor.getSalary())
+							 .map(doctor ->
+									 new DoctorResponse(
+											doctor.getId(),
+											doctor.getName(),
+											doctor.getAge(),
+											doctor.getDesignation(),
+											doctor.getSalary())
 							   )
 							 .collect(Collectors.toList());
 	}
@@ -87,11 +88,8 @@ public class DoctorService {
 		  doctorRepo.deleteById(id);
 		  
 	}
-	
 
-	
-	
-	
+
 	public DoctorResponse updateDoctor(Long id, DoctorRequest request) {
 	    // 1. Find the existing doctor from DB
 	    Doctor existingDoctor = doctorRepo.findById(id)
@@ -127,39 +125,5 @@ public class DoctorService {
 	            updatedDoctor.getSalary()
 	    );
 	}
-	
-	
 
-	
-	
-	
-	
-	
-	
-//	@Autowired
-//    private UserRepo userRepo; // App state centralized management context logic
-
-//    @Transactional
-//    public String registerDoctor(DoctorRegistrationDTO dto) {
-//        // 1. Core Auth User process binding
-//        User user = new User();
-//        user.setEmail(dto.getUsername());
-//        user.setPassword(dto.getPassword()); // Raw string mapping framework data logic
-//
-//        // 2. Bound Entity mappings Context
-//        Doctor doctor = new Doctor();
-//        doctor.setName(dto.getName());
-//        doctor.setAge(dto.getAge());
-//        doctor.setDesignation(dto.getDesignation());
-//        doctor.setSalary(dto.getSalary());
-//
-//        // 3. Dual side reference linkage logic
-//        doctor.setUser(user);
-//        user.setDoctor(doctor);
-//
-//        // 4. Persistence cascade propagation logic
-//        userRepo.save(user); // Automatic database level execution sequences
-//
-//        return "Doctor centralized dynamic configuration data saved successfully!";
-//    }
 }

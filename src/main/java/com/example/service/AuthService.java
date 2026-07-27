@@ -1,14 +1,13 @@
 package com.example.service;
 
-import com.example.dto.request.DoctorRegistrationDTO;
-import com.example.dto.request.ForgotPasswordRequestDTO;
-import com.example.dto.request.LoginRequestDTO;
-import com.example.dto.request.ResetPasswordRequestDTO;
+import com.example.dto.request.*;
 import com.example.dto.response.LoginResponseDTO;
 import com.example.entity.Doctor;
+import com.example.entity.Employee;
 import com.example.entity.User;
 import com.example.enums.Role;
 import com.example.repo.DoctorRepo;
+import com.example.repo.EmployeeRepo;
 import com.example.repo.UserRepo;
 import com.example.security.JwtUtil;
 import jakarta.mail.MessagingException;
@@ -44,10 +43,11 @@ public class AuthService {
 
     private final EmailService emailService;
 
-private final DoctorRepo doctorRepo;
+    private final DoctorRepo doctorRepo;
 
     private final PasswordEncoder encoder;
 
+    private final EmployeeRepo employeeRepo;
     /**
      * Authenticates a user and returns login information
      * along with a JWT token.
@@ -336,4 +336,76 @@ public String registerDoctor(DoctorRegistrationDTO dto){
 
 }
 
+
+
+    //    // Extra this is my code here:
+    @Transactional
+    public String registerEmployee(EmployeeRegistrationDTO dto){
+
+        if(userRepository.existsByEmail(dto.getEmail())){
+            throw new RuntimeException("Email already exists");
+        }
+
+
+        User user = new User();
+
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setPhone(dto.getPhone());
+
+        user.setPassword(
+                encoder.encode(dto.getPassword())
+        );
+
+        user.setRole(Role.EMPLOYEE);
+
+        user.setActive(false);
+
+
+        userRepository.save(user);
+
+
+
+        Employee employee = new Employee();
+
+         employee.setAddress(dto.getAddress());
+         employee.setCity(dto.getCity());
+         employee.setState(dto.getState());
+         employee.setZipCode(dto.getZipCode());
+         employee.setCountry(dto.getCountry());
+
+        employee.setUser(user);
+
+
+        employeeRepo.save(employee);
+
+
+
+        // Generate verification token
+
+        String token =
+                jwtUtil.generateVerificationToken(
+                        user.getEmail()
+                );
+
+
+        try {
+
+            emailService.sendVerificationEmail(
+                    user.getEmail(),
+                    user.getName(),
+                    token
+            );
+
+        } catch (MessagingException e){
+
+            throw new RuntimeException(
+                    "Email sending failed"
+            );
+        }
+
+
+        return token;
+
+    }
 }

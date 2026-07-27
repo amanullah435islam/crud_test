@@ -1,9 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.request.DoctorRegistrationDTO;
-import com.example.dto.request.ForgotPasswordRequestDTO;
-import com.example.dto.request.LoginRequestDTO;
-import com.example.dto.request.ResetPasswordRequestDTO;
+import com.example.dto.request.*;
 import com.example.dto.response.LoginResponseDTO;
 import com.example.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +15,26 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+
+
+
+    @PostMapping("/employee/register")
+    public ResponseEntity<?> registerEmployee(
+            @RequestBody EmployeeRegistrationDTO dto
+    ){
+        String token = authService.registerEmployee(dto);
+        return ResponseEntity.ok(
+                Map.of(
+                        "message",
+                        "Employee registered successfully",
+
+                        "verificationToken",
+                        token
+                )
+        );
+
+    }
+
 
 // // this code are email into token after Ragistration(professional way)
 

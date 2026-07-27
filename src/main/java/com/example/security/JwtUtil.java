@@ -68,15 +68,8 @@ public class JwtUtil {
     }
 
 
-//Validate token _ checks signature + expiry
-    public boolean validate(String token) {
-        try {
-            getClaims(token);
-            return true;
-        }catch (JwtException | IllegalArgumentException e) {
-            return false;
-        }
-    }
+
+
 
 
     // ── Password reset token (short-lived, single purpose) ─────────

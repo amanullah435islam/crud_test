@@ -4,7 +4,8 @@ public enum Role {
 
     DOCTOR,
     PATIENT,
-    ADMIN;
+    ADMIN,
+    EMPLOYEE;
 
     // Returns Spring Security compatible authority string
     public String getAuthority() {

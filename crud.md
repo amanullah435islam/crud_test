@@ -2,6 +2,128 @@
 
 
 
+সম্পূর্ণ Login Flow:
+
+User Login Request
+        │
+        ▼
+Email + Password
+        │
+        ▼
+AuthenticationManager
+        │
+        ▼
+UserDetailsService
+        │
+        ▼
+UserRepository.findByEmail(email)
+        │
+        ▼
+User Entity
+        │
+        ▼
+getUsername()
+getPassword()
+getAuthorities()
+isEnabled()
+isAccountNonLocked()
+isAccountNonExpired()
+isCredentialsNonExpired()
+        │
+        ▼
+Password Match?
+        │
+   Yes ─────────► Generate JWT / Create Session
+    │
+    No
+    ▼
+Authentication Failed
+
+
+
+
+Flow OneToOne centralized design flow :
+
+                      Doctor Registration
+
+                      ↓
+
+                      Create User
+
+                      ↓
+
+                      Save User
+
+                      ↓
+
+                      User id generated
+
+                      ↓
+
+                      Create Doctor
+
+                      ↓
+
+                      Doctor.user = Saved User
+
+                      ↓
+
+                      Save Doctor
+
+                      ↓
+
+                      Doctor Table gets user_id
+
+
+পুরো Flow (User ↔ Doctor) :
+
+                Doctor Registration
+                        │
+                        ▼
+               Create User Object
+                        │
+                        ▼
+                Save User Table
+                        │
+                (ID generated)
+                        │
+                        ▼
+              Create Doctor Object
+                        │
+        doctor.setUser(savedUser)
+                        │
+                        ▼
+              Save Doctor Table
+                        │
+                        ▼
+        doctors.user_id = users.id
+
+
+
+
+
+User & Doctor code Explain:
+
+Interview Questions:-
+UserDetails কেন implement করেছ?
+Spring Security যেন User entity-কেই Authentication-এর জন্য ব্যবহার করতে পারে।
+getUsername()-এ email return করেছ কেন?
+কারণ Login Email দিয়ে হবে, Username দিয়ে নয়।
+@Enumerated(EnumType.STRING) কেন?
+Role Database-এ ADMIN, DOCTOR ইত্যাদি String আকারে Save হবে; Number Save করলে ভবিষ্যতে Enum order বদলালে সমস্যা হতে পারে।
+mappedBy কেন ব্যবহার করা হয়েছে?
+Doctor side relationship-এর owner। তাই User side-এ mappedBy="user" দিয়ে inverse side দেখানো হয়েছে।
+FetchType.LAZY কেন?
+Doctor Load করার সময় অপ্রয়োজনীয়ভাবে User Load না করে Performance ভালো রাখতে।
+CascadeType.ALL কেন?
+Parent entity-এর operation (save/update/delete) Child entity-তেও Apply করার জন্য।
+
+
+
+
+
+
+
 1. Login
 POST
 

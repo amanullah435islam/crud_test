@@ -46,9 +46,16 @@ public class User implements UserDetails {
 
 
     // Bi-directional relationship (Optional, dependency maintenance logic-er jonno useful)
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user",
+              cascade = CascadeType.ALL
+             )
     private Doctor doctor;
 
+
+
+    @OneToOne(mappedBy = "user",
+              cascade = CascadeType.ALL)
+    private Employee employee;
 
 
     @Override

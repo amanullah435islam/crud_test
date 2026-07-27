@@ -87,7 +87,7 @@ String token = authHeader.substring("Bearer ".length());
         // - Expiration date
         // - Token structure
         // ============================================================
-if (jwtUtil.validate(token)) {
+if (jwtUtil.isValid(token)) {
 
 
     // ========================================================
