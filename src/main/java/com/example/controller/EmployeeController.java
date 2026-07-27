@@ -1,6 +1,7 @@
 package com.example.controller;
 
-import com.example.entity.Employee;
+import com.example.dto.request.EmployeeRequest;
+import com.example.dto.response.EmployeeResponse;
 import com.example.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,9 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/save")
-    public ResponseEntity<Employee> save(@RequestBody Employee employee) {
+    public ResponseEntity<EmployeeResponse> save(@RequestBody EmployeeRequest employee) {
 
-        Employee savedEmployee =
+        EmployeeResponse savedEmployee =
                 employeeService.saveEmployee(employee);
 
         return ResponseEntity
@@ -29,24 +30,30 @@ public class EmployeeController {
 
 
     @GetMapping("/get")
-    public ResponseEntity<List<Employee>> getAll()
+    public ResponseEntity<List<EmployeeResponse>> getAll()
     {
-
-        return ResponseEntity.ok(employeeService.getAllEmployee());
+            return ResponseEntity.ok(employeeService.getAllEmployee());
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getById(@PathVariable Long id)
+    public ResponseEntity<?> getById(@PathVariable Long id)
     {
-        return ResponseEntity.ok(employeeService.getEmployeeById(id));
+        try {
+            return ResponseEntity.ok(employeeService.getEmployeeById(id));
+        }catch (RuntimeException e){
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Error : " + e.getMessage());
+        }
+
     }
 
 
 
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@RequestBody Employee employee, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody EmployeeRequest employee, @PathVariable Long id) {
         try {
             return ResponseEntity.ok(employeeService.updateEmployee(employee, id));
         } catch (RuntimeException ex) {
@@ -58,10 +65,18 @@ public class EmployeeController {
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+    public ResponseEntity<String> deleteById(@PathVariable Long id) {
 
-        employeeService.deleteEmployeeById(id);
-        return ResponseEntity.ok("Employee has been deleted");
+        try {
+            employeeService.deleteEmployeeById(id);
+            return ResponseEntity.ok("Deleted Employee with id: " + id);
+        }catch (RuntimeException ex) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Error : " + ex.getMessage());
+        }
+
+
     }
 
 

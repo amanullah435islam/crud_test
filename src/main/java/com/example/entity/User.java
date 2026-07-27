@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import com.example.enums.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -55,6 +56,7 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user",
               cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Employee employee;
 
 
