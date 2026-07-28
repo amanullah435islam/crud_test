@@ -52,7 +52,8 @@ public class EmployeeController {
 
 
 
-    @PutMapping("/update/{id}")
+    //@PutMapping("/update/{id}")             // use for full update code
+    @PatchMapping("/update/{id}")           //use for Partial Update
     public ResponseEntity<?> update(@RequestBody EmployeeRequest employee, @PathVariable Long id) {
         try {
             return ResponseEntity.ok(employeeService.updateEmployee(employee, id));
