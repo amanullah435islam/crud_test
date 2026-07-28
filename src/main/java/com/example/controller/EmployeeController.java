@@ -18,8 +18,8 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/save")
-    public ResponseEntity<EmployeeResponse> save(@RequestBody EmployeeRequest employee) {
-
+    public ResponseEntity<EmployeeResponse> save(@RequestBody EmployeeRequest employee)
+    {
         EmployeeResponse savedEmployee =
                 employeeService.saveEmployee(employee);
 
@@ -36,48 +36,29 @@ public class EmployeeController {
     }
 
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id)
+    public ResponseEntity<EmployeeResponse> getById(
+            @PathVariable Long id)
     {
-        try {
-            return ResponseEntity.ok(employeeService.getEmployeeById(id));
-        }catch (RuntimeException e){
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("Error : " + e.getMessage());
-        }
-
+        return ResponseEntity.ok(employeeService.getEmployeeById(id));
     }
-
 
 
 
     //@PutMapping("/update/{id}")             // use for full update code
     @PatchMapping("/update/{id}")           //use for Partial Update
-    public ResponseEntity<?> update(@RequestBody EmployeeRequest employee, @PathVariable Long id) {
-        try {
+    public ResponseEntity<EmployeeResponse> update(@RequestBody EmployeeRequest employee, @PathVariable Long id)
+    {
             return ResponseEntity.ok(employeeService.updateEmployee(employee, id));
-        } catch (RuntimeException ex) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(ex.getMessage());
-        }
     }
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteById(@PathVariable Long id) {
-
-        try {
+    public ResponseEntity<String> deleteById(@PathVariable Long id)
+    {
             employeeService.deleteEmployeeById(id);
             return ResponseEntity.ok("Deleted Employee with id: " + id);
-        }catch (RuntimeException ex) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("Error : " + ex.getMessage());
-        }
-
-
     }
 
 
