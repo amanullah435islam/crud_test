@@ -19,7 +19,7 @@ import com.example.entity.Patient;
 import com.example.service.PatientService;
 
 @RestController
-@RequestMapping("/patient")
+@RequestMapping("/api/auth/patient")
 public class PatientController {
 
 	private final PatientService patientService;

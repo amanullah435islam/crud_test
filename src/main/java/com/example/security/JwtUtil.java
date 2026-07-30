@@ -48,6 +48,9 @@ public class JwtUtil {
 
 
     // ── Private helpers ───────────────────────────────────────────
+// JWT Token parse korci,
+// Signature verify korci and valid hole
+// Token ar Claims/Payload ongsoti ber korci.
 
     private Claims getClaims(String token) {
         return Jwts.parser()
