@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-//only repository test ar jonno but mail keno laglo jani na ata na dile bar bar error astecilo:
+//only repository test ar jonno ;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class PatientTestRepo {
