@@ -50,9 +50,6 @@ public class SecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
 
-                        // Home page
-                        .requestMatchers("/").permitAll()
-
                         // ── Public endpoints (no token needed) ────────────
                         .requestMatchers(
                                 "/api/auth/**",
