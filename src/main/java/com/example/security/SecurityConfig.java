@@ -39,6 +39,20 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authorizeHttpRequests(auth -> auth
 
+
+                        // Swagger URLs
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+
+                        // Home page
+                        .requestMatchers("/").permitAll()
+
                         // ── Public endpoints (no token needed) ────────────
                         .requestMatchers(
                                 "/api/auth/**",
@@ -47,6 +61,8 @@ public class SecurityConfig {
                                 "/api/auth/reset-password"
                         ).permitAll()
 
+                        // Other APIs need JWT
+                        .anyRequest().authenticated()
 
                 ).authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

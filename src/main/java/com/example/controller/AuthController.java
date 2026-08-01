@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.dto.request.*;
 import com.example.dto.response.LoginResponseDTO;
 import com.example.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@Tag(name = "User APIs", description = "Operations related to users")
 public class AuthController {
 
     private final AuthService authService;

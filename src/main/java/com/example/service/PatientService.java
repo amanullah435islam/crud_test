@@ -3,6 +3,7 @@ package com.example.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.example.customException.ResourceNotFoundException;
 import com.example.dto.request.PatientRequest;
@@ -11,16 +12,11 @@ import com.example.entity.Patient;
 import com.example.repo.PatientRepo;
 
 @Service
+@RequiredArgsConstructor
 public class PatientService {
 
 	private final PatientRepo patientRepo;
 
-	public PatientService(PatientRepo patientRepo) {
-		
-		this.patientRepo = patientRepo;
-	}
-	
-	
 	public PatientResponse create(PatientRequest patient) {
 		
 		Patient p = new Patient();

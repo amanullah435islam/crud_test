@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,27 +18,24 @@ import com.example.dto.request.PatientRequest;
 import com.example.dto.response.PatientResponse;
 import com.example.entity.Patient;
 import com.example.service.PatientService;
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/auth/patient")
 public class PatientController {
 
 	private final PatientService patientService;
 
-	public PatientController(PatientService patientService) {
-	
-		this.patientService = patientService;
-	}
-	
+
 	
 	@PostMapping("/save")
 	public ResponseEntity<PatientResponse> createPatient(@RequestBody PatientRequest patient) {
-		
-		return ResponseEntity.ok(patientService.create(patient));
+		PatientResponse p = patientService.create(patient);
+		System.out.println("Successfully created patient with " + p);
+		return ResponseEntity.ok(p);
 	}
-	
-	
-	
+
+
+
 	@GetMapping("/getAll")
 	public ResponseEntity<List<PatientResponse>> getAllPatient() {
 		
