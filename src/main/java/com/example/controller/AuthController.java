@@ -3,6 +3,9 @@ package com.example.controller;
 import com.example.dto.request.*;
 import com.example.dto.response.LoginResponseDTO;
 import com.example.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@Tag(name = "User APIs", description = "Operations related to users")
+@Tag(
+        name="Authentication APIs",
+        description="Register, Login and JWT operations"
+)
 public class AuthController {
 
     private final AuthService authService;
@@ -21,6 +27,23 @@ public class AuthController {
 
 
     @PostMapping("/employee/register")
+    @Operation(
+            summary = "Register an Employee",
+            description = "Creates a new employee account and sends an email verification link."
+    )
+    @ApiResponses({
+
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Employee registered successfully"
+            ),
+
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request or email already exists"
+            )
+
+    })
     public ResponseEntity<?> registerEmployee(
             @RequestBody EmployeeRegistrationDTO dto
     ){
@@ -38,9 +61,28 @@ public class AuthController {
     }
 
 
-// // this code are email into token after Ragistration(professional way)
+
+
+
 
     @PostMapping("/doctor/register")
+    @Operation(
+            summary = "Register a Doctor",
+            description = "Creates a new user account with DOCTOR role and a doctor profile. A verification email is sent after successful registration."
+    )
+    @ApiResponses({
+
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Doctor registered successfully"
+            ),
+
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request or email already exists"
+            )
+
+    })
 public ResponseEntity<?> registerDoctor(
         @RequestBody DoctorRegistrationDTO dto
 ){
@@ -57,20 +99,67 @@ public ResponseEntity<?> registerDoctor(
 
 }
 
-    // POST /api/auth/login
+
+
+
+
     @PostMapping("/login")
+    @Operation(
+            summary = "User Login",
+            description = "Authenticates the user and returns a JWT access token."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Login successful"
+            ),
+
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Invalid email or password"
+            ),
+
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Account is not verified or access is denied"
+            )
+    })
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO dto) {
         return ResponseEntity.ok(authService.login(dto));
     }
 
 
-    // GET /api/auth/verify-email?token=...
-    // User clicks this link from their email
+
+
+
+
     @GetMapping("/verify-email")
+    @Operation(
+            summary = "Verify Email",
+            description = "Activates a user account using the email verification token."
+    )
+    @ApiResponses({
+
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Email verified successfully"
+            ),
+
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid or expired verification token"
+            )
+
+    })
     public ResponseEntity<String> verifyEmail(@RequestParam String token) {
         authService.verifyEmail(token);
         return ResponseEntity.ok("Email verified successfully. You can now log in.");
     }
+
+
+
+
+
 
     // ── Password reset ──────────────────────────────────────────────
 
@@ -81,6 +170,9 @@ public ResponseEntity<?> registerDoctor(
         authService.forgotPassword(dto);
         return ResponseEntity.ok("Password reset link sent to " + dto.getEmail());
     }
+
+
+
 
     // POST /api/auth/reset-password
     // Body: { "token": "...", "newPassword": "newPass123" }

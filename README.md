@@ -49,3 +49,39 @@ Request URL
 http://localhost:8080/
 
 its main url but it not work that now. it solve than after commit
+
+
+
+
+
+
+Our learning plan from here
+
+I suggest we continue in this order:
+
+Step	            Topic	                                    Status
+
+1	            Swagger/OpenAPI basics	                        ✅ Done
+
+2	            Swagger + JWT Authorize button	                Next
+
+3	            DTO documentation with @Schema	                Next
+
+4	            Global Exception Handling	                    Next
+
+5	            Validation (@Valid, @NotBlank, etc.)	        Next
+
+6	            Refresh Token	                                Next
+
+7	            Unit Testing (JUnit & Mockito)	                Next
+
+8	            Docker	                                        Next
+
+9	            Redis	                                        Next
+
+10	            GitHub Actions (CI/CD)	                        Next
+
+11	            AWS Deployment	                                Final
+
+
+
