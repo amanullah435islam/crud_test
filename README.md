@@ -85,3 +85,14 @@ Step	            Topic	                                    Status
 
 
 
+
+
+
+Property	                Purpose	                   Example
+
+description	            Explain field	            "User email"
+example	                Sample value	            "aman@gmail.com"
+requiredMode	        Required/optional	        REQUIRED
+minLength	            Minimum characters	            6
+maximum	                Maximum number	               100
+defaultValue	        Default value	            "ACTIVE"

@@ -2,6 +2,7 @@ package com.example.entity;
 
 import com.example.enums.Role;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,6 +39,10 @@ public class User implements UserDetails {
     private String password;
 
 
+    @Schema(
+            description = "User role",
+            example = "DOCTOR"
+    )
     @Enumerated(EnumType.STRING)
     private Role role;
 

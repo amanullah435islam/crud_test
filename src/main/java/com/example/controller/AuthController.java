@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +47,7 @@ public class AuthController {
 
     })
     public ResponseEntity<?> registerEmployee(
-            @RequestBody EmployeeRegistrationDTO dto
+            @Valid @RequestBody EmployeeRegistrationDTO dto
     ){
         String token = authService.registerEmployee(dto);
         return ResponseEntity.ok(
@@ -85,7 +86,7 @@ public class AuthController {
 
     })
 public ResponseEntity<?> registerDoctor(
-        @RequestBody DoctorRegistrationDTO dto
+        @Valid @RequestBody DoctorRegistrationDTO dto
 ){
     String token = authService.registerDoctor(dto);
     return ResponseEntity.ok(
@@ -125,7 +126,9 @@ public ResponseEntity<?> registerDoctor(
                     description = "Account is not verified or access is denied"
             )
     })
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO dto) {
+    public ResponseEntity<LoginResponseDTO> login(
+            @Valid @RequestBody LoginRequestDTO dto
+    ) {
         return ResponseEntity.ok(authService.login(dto));
     }
 
@@ -177,7 +180,9 @@ public ResponseEntity<?> registerDoctor(
     // POST /api/auth/forgot-password
     // Body: { "email": "fatema@gmail.com" }
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequestDTO dto) {
+    public ResponseEntity<String> forgotPassword(
+            @Valid @RequestBody ForgotPasswordRequestDTO dto
+    ) {
         authService.forgotPassword(dto);
         return ResponseEntity.ok("Password reset link sent to " + dto.getEmail());
     }
@@ -188,7 +193,9 @@ public ResponseEntity<?> registerDoctor(
     // POST /api/auth/reset-password
     // Body: { "token": "...", "newPassword": "newPass123" }
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequestDTO dto) {
+    public ResponseEntity<String> resetPassword(
+            @Valid @RequestBody ResetPasswordRequestDTO dto
+    ) {
         authService.resetPassword(dto);
         return ResponseEntity.ok("Password reset successful. You can now log in with your new password.");
     }
