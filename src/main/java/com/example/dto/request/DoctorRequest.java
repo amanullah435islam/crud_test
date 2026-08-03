@@ -21,7 +21,7 @@ public class DoctorRequest {
 			description = "Doctor age",
 			example = "35"
 	)
-	private Integer age;
+	private Long age;
 
 
 

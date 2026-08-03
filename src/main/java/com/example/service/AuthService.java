@@ -297,7 +297,7 @@ public String registerDoctor(DoctorRegistrationDTO dto){
     Doctor doctor = new Doctor();
 
     doctor.setName(dto.getName());
-    doctor.setAge(dto.getAge());
+    doctor.setAge(String.valueOf(dto.getAge()));
     doctor.setDesignation(dto.getDesignation());
     doctor.setSalary(dto.getSalary());
 

@@ -27,7 +27,7 @@ public class DoctorService {
 		Doctor doctor = new Doctor();
 		
 		doctor.setName(request.getName());
-		doctor.setAge(request.getAge());
+		doctor.setAge(String.valueOf(request.getAge()));
 		doctor.setDesignation(request.getDesignation());
 		doctor.setSalary(request.getSalary());
 		
@@ -101,7 +101,7 @@ public class DoctorService {
 	    }
 	    
 	    if (request.getAge() != null) {
-	        existingDoctor.setAge(request.getAge());
+	        existingDoctor.setAge(String.valueOf(request.getAge()));
 	    }
 	    
 	    if (request.getDesignation() != null) {
