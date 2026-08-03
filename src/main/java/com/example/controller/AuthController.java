@@ -4,6 +4,7 @@ import com.example.dto.request.*;
 import com.example.dto.response.LoginResponseDTO;
 import com.example.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -151,9 +152,19 @@ public ResponseEntity<?> registerDoctor(
             )
 
     })
-    public ResponseEntity<String> verifyEmail(@RequestParam String token) {
+    public ResponseEntity<String> verifyEmail(
+
+            @Parameter(
+                    description = "Email verification token sent by email",
+                    example = "eyJhbGciOiJIUzI1NiJ9..."
+            )
+            @RequestParam String token) {
+
         authService.verifyEmail(token);
-        return ResponseEntity.ok("Email verified successfully. You can now log in.");
+
+        return ResponseEntity.ok(
+                "Email verified successfully."
+        );
     }
 
 
@@ -183,4 +194,19 @@ public ResponseEntity<?> registerDoctor(
     }
 
 
+// Just example not worked
+    @GetMapping("/profile")
+    public void profile(
+
+            @Parameter(
+                    description = "JWT Bearer Token"
+            )
+
+            @RequestHeader("Authorization")
+            String token){
+
+
+
+        return ;
+    }
 }

@@ -3,6 +3,7 @@ package com.example.controller;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,13 @@ public class DoctorController {
 	
 	@GetMapping("/doctor/get/{id}")
 	@Operation(summary = "Get doctor by ID")
-	public ResponseEntity<?> getDoctorById(@PathVariable Long id) {
+	public ResponseEntity<?> getDoctorById(
+			@Parameter(
+					description = "Doctor ID",
+					example = "10"
+			)
+			@PathVariable Long id
+	) {
 		
 		try {	        
 	        DoctorResponse response = doctorService.getById(id);
@@ -70,8 +77,14 @@ public class DoctorController {
 	
 	
 	@DeleteMapping("/doctor/delete/{id}")
-	@Operation(summary = "Create Doctor")
-	public ResponseEntity<String> deleteDoctor(@PathVariable Long id) {
+	@Operation(summary = "Delete Doctor")
+	public ResponseEntity<String> deleteDoctor(
+			@Parameter(
+					description = "Doctor ID",
+					example = "5"
+			)
+			@PathVariable Long id
+	) {
 		
 		 try {
 			 doctorService.delete(id);
@@ -101,13 +114,4 @@ public class DoctorController {
 	    
 	}
 
-    
-    
-	
-//	// POST endpoint to handle simultaneous registration (User) and profile (Doctor) creation
-//    @PostMapping("doctor/register")
-//    public ResponseEntity<String> registerDoctor(@RequestBody DoctorRegistrationDTO registrationRequest) {
-//        String resultMessage = doctorService.registerDoctor(registrationRequest);
-//        return new ResponseEntity<>(resultMessage, HttpStatus.CREATED);
-//    }
 }

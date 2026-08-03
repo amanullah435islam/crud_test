@@ -4,6 +4,7 @@ import com.example.dto.request.EmployeeRequest;
 import com.example.dto.response.EmployeeResponse;
 import com.example.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,13 @@ public class EmployeeController {
     @GetMapping("/get")
     @Operation(summary = "Get all employees",
             description = "Returns a list of all employees")
-    public ResponseEntity<List<EmployeeResponse>> getAll()
-    {
+    public ResponseEntity<List<EmployeeResponse>> getAll(
+
+            @Parameter(
+                    description = "Employee name",
+                    example = "Aman"
+            ) @RequestParam String name
+    ){
             return ResponseEntity.ok(employeeService.getAllEmployee());
     }
 
@@ -64,8 +70,13 @@ public class EmployeeController {
 
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete employee by ID")
-    public ResponseEntity<String> deleteById(@PathVariable Long id)
-    {
+    public ResponseEntity<String> deleteById(
+            @Parameter(
+                    description = "Employee ID",
+                    example = "5"
+            )
+            @PathVariable Long id
+    ) {
             employeeService.deleteEmployeeById(id);
             return ResponseEntity.ok("Deleted Employee with id: " + id);
     }
