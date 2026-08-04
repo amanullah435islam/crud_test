@@ -4,6 +4,7 @@ import com.example.dto.request.*;
 import com.example.dto.response.LoginResponseDTO;
 import com.example.entity.User;
 import com.example.service.AuthService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -279,6 +280,23 @@ public List<User> getAllUsers() {
 
     return new ArrayList<User>();
 }
+
+
+// Sometimes you have APIs that should not appear in Swagger.
+@Hidden
+@GetMapping("/internal/cache-clear")
+public String clearCache() {
+    return "Cache Cleared";
+}
+
+
+
+@Operation(hidden = true)
+@GetMapping("/test")
+public String test() {
+    return "Test";
+}
+
 
 
 }
