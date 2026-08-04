@@ -96,3 +96,70 @@ requiredMode	        Required/optional	        REQUIRED
 minLength	            Minimum characters	            6
 maximum	                Maximum number	               100
 defaultValue	        Default value	            "ACTIVE"
+
+
+
+
+
+
+Custom Exception:
+
+        Controller
+        |
+        throw Exception
+        |
+        GlobalExceptionHandler
+        |
+        Standard JSON response
+        |
+        Frontend handles easily
+
+
+Details:
+
+        exception
+        |
+        |-- GlobalExceptionHandler.java
+        |
+        |-- ResourceAlreadyExistsException.java
+        |
+        |-- ResourceNotFoundException.java
+        |
+        dto/response
+        |
+        |-- ErrorResponseDTO.java
+
+
+
+
+API Flow :
+
+            Client
+
+            |
+
+            Login
+
+            |
+
+            Receive JWT
+
+            |
+
+            Swagger Authorize 🔒
+
+            |
+
+            Protected API
+
+            |
+
+            JwtAuthFilter
+
+            |
+
+            SecurityContext
+
+            |
+
+            Controller

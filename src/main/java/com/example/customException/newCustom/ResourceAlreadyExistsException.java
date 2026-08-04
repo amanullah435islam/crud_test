@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.customException.newCustom;
 
 
 public class ResourceAlreadyExistsException

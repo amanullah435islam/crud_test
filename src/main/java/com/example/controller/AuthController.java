@@ -2,17 +2,22 @@ package com.example.controller;
 
 import com.example.dto.request.*;
 import com.example.dto.response.LoginResponseDTO;
+import com.example.entity.User;
 import com.example.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,13 +41,18 @@ public class AuthController {
     @ApiResponses({
 
             @ApiResponse(
-                    responseCode = "200",
-                    description = "Employee registered successfully"
+                    responseCode="200",
+                    description="Employee registered successfully"
             ),
 
             @ApiResponse(
-                    responseCode = "400",
-                    description = "Invalid request or email already exists"
+                    responseCode="400",
+                    description="Email already exists or validation failed"
+            ),
+
+            @ApiResponse(
+                    responseCode="500",
+                    description="Internal server error"
             )
 
     })
@@ -75,13 +85,18 @@ public class AuthController {
     @ApiResponses({
 
             @ApiResponse(
-                    responseCode = "200",
-                    description = "Doctor registered successfully"
+                    responseCode="200",
+                    description="Doctor registered successfully"
             ),
 
             @ApiResponse(
-                    responseCode = "400",
-                    description = "Invalid request or email already exists"
+                    responseCode="400",
+                    description="Email already exists or validation failed"
+            ),
+
+            @ApiResponse(
+                    responseCode="500",
+                    description="Internal server error"
             )
 
     })
@@ -201,7 +216,35 @@ public ResponseEntity<?> registerDoctor(
     }
 
 
+
+
+
+//    Extra code bellow here:::::::::::::::
+
 // Just example not worked
+    @Operation(
+            summary = "Get Logged-in User Profile",
+            description = "Returns the authenticated user's profile."
+    )
+    @SecurityRequirement(name = "bearerAuth")
+    @ApiResponses({
+
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Profile retrieved successfully"
+            ),
+
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "JWT token is missing or invalid"
+            ),
+
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "User is not allowed to access this resource"
+            )
+
+    })
     @GetMapping("/profile")
     public void profile(
 
@@ -216,4 +259,26 @@ public ResponseEntity<?> registerDoctor(
 
         return ;
     }
+
+
+// Just example not worked
+// Example: Admin API
+@PreAuthorize("hasRole('ADMIN')")
+@GetMapping("/users")
+@SecurityRequirement(name = "bearerAuth")
+@ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Users retrieved successfully"),
+
+        @ApiResponse(responseCode = "401", description = "JWT authentication required"),
+
+        @ApiResponse(responseCode = "403", description = "Only ADMIN can access")
+
+})
+public List<User> getAllUsers() {
+
+    return new ArrayList<User>();
+}
+
+
 }
