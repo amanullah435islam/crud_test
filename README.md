@@ -163,3 +163,19 @@ API Flow :
             |
 
             Controller
+
+
+
+
+Docker :::::::::::
+
+            Windows 11
+            │
+            ├── WSL 2 ✅
+            │     │
+            │     ├── Ubuntu
+            │     └── Ubuntu 24.04
+            │
+            └── Docker Desktop
+                    │
+                    └── Linux Containers

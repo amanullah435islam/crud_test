@@ -25,27 +25,35 @@ public class OpenApiConfig {
 
                 .info(
                         new Info()
-                                .title("Hospital Management API")
-                                .description("REST API for Hospital Management System")
-                                .version("1.0")
+                                .title("Hospital Management System API")
 
-                                .contact(
-                                        new Contact()
-                                                .name("Md. Amanullah Islam")
-                                                .email("amanullah435islam@gmail.com")
-                                )
+                                .description("REST API Documentation for Hospital Management System")
 
-                                .license(
-                                        new License()
-                                                .name("CUSTOM License")
+                                .version("1.0.0")
+
+                                .contact(new Contact()
+
+                                        .name("Md. Amanullah")
+
+                                        .email("aman435islam@gmail.com")
+
+                                        .url("https://github.com/amanullah435islam"))
+
+                                .license(new License()
+
+                                        .name("Apache 2.0")
+
+                                        .url("https://www.apache.org/licenses/LICENSE-2.0")
                                 )
                 )
+
+
 
                 .servers(List.of(
 
                         new Server()
                                 .url("http://localhost:8080/swagger-ui/index.html#/Doctor%20APIs")
-                                .url("http://localhost:8080")
+//                                .url("http://localhost:8080")
                                 .description("Development Server"),
 
                         new Server()
@@ -56,8 +64,9 @@ public class OpenApiConfig {
 
                 .externalDocs(
                         new ExternalDocumentation()
-                                .description("Project Documentation")
-                                .url("https://custom.company.com/docs")
+                                .description("GitHub Repository")
+
+                                .url("https://github.com/amanullah435islam")
                 )
 
                 // JWT Authentication

@@ -1,0 +1,61 @@
+version: '3.9'
+
+services:
+
+  mysql:
+
+    image: mysql:8.4
+
+    container_name: mysql
+
+    env_file:
+      - .env
+
+    restart: always
+
+    environment:
+
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+    networks:
+      - crud-network
+
+
+
+  springboot:
+
+    build: .
+
+    container_name: crud-app
+
+    env_file:
+      - .env
+
+    depends_on:
+      - mysql
+
+    restart: always
+
+    ports:
+      - "8080:8080"
+
+    networks:
+      - crud-network
+
+
+
+networks:
+  crud-network:
+
+
+
+volumes:
+  mysql-data:
