@@ -17,7 +17,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepo userRepo;
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -26,22 +25,50 @@ public class CustomUserDetailsService implements UserDetailsService {
                         "User not found with email: " + username
                 ));
 
-// Role stored as "ADMIN" → Spring Security needs "ROLE_ADMIN"
-String roleAuthority = "ROLE_" + user.getRole().name();
 
-if (!user.isActive()) {
+
+
+//        // Debug test:
+
+//        System.out.println("LOGIN EMAIL = " + username);
+//
+//        User user = userRepo.findByEmail(username)
+//                .orElseThrow(() -> new UsernameNotFoundException(
+//                        "User not found with email: " + username
+//                ));
+//
+//        System.out.println("DB EMAIL = " + user.getEmail());
+//        System.out.println("DB PASSWORD = " + user.getPassword());
+//        System.out.println("ACTIVE = " + user.isActive());
+//        System.out.println("ROLE = " + user.getRole());
+
+
+
+
+
+
+
+
+
+
+
+// Role stored as "ADMIN" → Spring Security needs "ROLE_ADMIN"
+    String roleAuthority = "ROLE_" + user.getRole().name();
+
+    if (!user.isActive()) {
     throw new DisabledException(
             "Your account is inactive. Please contact admin."
     );
-}
+    }
 
 
-return new org.springframework.security.core.userdetails.User(
+    return new org.springframework.security.core.userdetails.User(
         user.getEmail(),
         user.getPassword(),
         List.of(new SimpleGrantedAuthority(roleAuthority))
 
-);
+    );
 
     }
+
 }

@@ -70,6 +70,30 @@ public class AuthService {
         // =====================================================
 
 
+//         // Debug test:
+
+//        User user = userRepository.findByEmail(dto.getEmail())
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        System.out.println("========== LOGIN DEBUG ==========");
+//        System.out.println("LOGIN EMAIL = " + dto.getEmail());
+//        System.out.println("RAW PASSWORD = " + dto.getPassword());
+//        System.out.println("DB EMAIL = " + user.getEmail());
+//        System.out.println("DB PASSWORD = " + user.getPassword());
+//        System.out.println("ACTIVE = " + user.isActive());
+//
+//        System.out.println("PASSWORD MATCH = " +
+//                encoder.matches(
+//                        dto.getPassword(),
+//                        user.getPassword()
+//                ));
+//
+//        System.out.println("=================================");
+
+
+
+
+
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -95,8 +119,8 @@ public class AuthService {
         // retrieve the full user entity.
         // =====================================================
         User user = userRepository.findByEmail(dto.getEmail())
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
 
         // =====================================================
         // STEP 3: Generate JWT token
