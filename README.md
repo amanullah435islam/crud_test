@@ -432,6 +432,45 @@ This also prepares the project for future CI/CD and cloud deployment.
 
 ---
 
+## 📚 API Documentation
+
+This project uses Swagger/OpenAPI for REST API documentation and interactive API testing.
+
+When the application is running locally, the following endpoints are available:
+
+| Documentation   | URL                                           |
+| --------------- | --------------------------------------------- |
+| 📖 Swagger UI   | `http://localhost:8081/swagger-ui/index.html` |
+| 📄 OpenAPI JSON | `http://localhost:8081/v3/api-docs`           |
+
+
+## Swagger UI
+Swagger UI provides an interactive interface for exploring and testing the REST APIs.
+
+
+**Note:** These URLs are available only when the application is running locally. They are not public/live endpoints.
+
+---
+
+## 📸 Screenshots
+
+### 📚 Swagger / OpenAPI
+![Swagger API](screenshots/top_part.png)
+![Swagger API](screenshots/authentication.png)
+![Swagger API](screenshots/employee_patient.png)
+
+### 👥 CRUD APIs
+![CRUD API](screenshots/employee_register_request.png)
+![CRUD API](screenshots/employee_register_response.png)
+![CRUD API](screenshots/login_request.png)
+![CRUD API](screenshots/login_response.png)
+
+### 🐳 Docker
+![Docker Container](screenshots/Docker.png)
+
+---
+
+
 # 🛠️ Technology Stack
 
 | Technology                | Purpose                        |
@@ -923,7 +962,7 @@ AWS
 
 # 🔗 Repository
 
-[CRUD Backend Project — GitHub Repository](https://github.com/amanullah435islam/crud_test?utm_source=chatgpt.com)
+[CRUD Backend Project — GitHub Repository](https://github.com/amanullah435islam/crud_test)
 
 ---
 
