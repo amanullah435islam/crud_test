@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface AppointmentService {
 
-    Appointment Save(Appointment appointment);
+    Appointment save(Appointment appointment);
     List<Appointment> getAll();
     Appointment findById(Long id);
-    Appointment Update(Appointment appointment, Long id);
+    Appointment update(Appointment appointment, Long id);
     void delete(Long id);
 }

@@ -18,7 +18,7 @@ public class AppointmentController {
     @PostMapping("/save")
     public Appointment saveAppointment(@RequestBody Appointment appointment){
 
-        return appointmentService.Save(appointment);
+        return appointmentService.save(appointment);
     }
 
     @GetMapping("/get")
@@ -35,7 +35,7 @@ public class AppointmentController {
 
     @PutMapping("/{id}")
     public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointment){
-        return appointmentService.Update(appointment, id);
+        return appointmentService.update(appointment, id);
     }
 
     @DeleteMapping("/{id}")

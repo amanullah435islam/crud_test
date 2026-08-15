@@ -21,7 +21,7 @@ public class AppointmentServiceImp implements AppointmentService {
 
 
     @Override
-    public Appointment Save(Appointment appointment) {
+    public Appointment save(Appointment appointment) {
         return appointmentRepo.save(appointment);
     }
 
@@ -38,7 +38,7 @@ public class AppointmentServiceImp implements AppointmentService {
     }
 
     @Override
-    public Appointment Update(Appointment appointment, Long id) {
+    public Appointment update(Appointment appointment, Long id) {
 
         Appointment a = appointmentRepo.findById(id).
                 orElseThrow(() -> new EntityNotFoundException("Appointment with id: " + id + " not found!"));
