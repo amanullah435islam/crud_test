@@ -8,11 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.mail.javamail.JavaMailSender;   //very very important
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -32,19 +28,11 @@ public class testAppointment {
         appointment.setDescription("test appointment");
 
         appointment.setStartTime(
-                Date.from(
-                        LocalDateTime.of(2026, 8, 15, 9, 0)
-                                .atZone(ZoneId.systemDefault())
-                                .toInstant()
-                )
+                LocalDateTime.of(2026, 8, 15, 9, 0)
         );
 
         appointment.setEndTime(
-                Date.from(
-                        LocalDateTime.of(2026, 8, 15, 10, 0)
-                                .atZone(ZoneId.systemDefault())
-                                .toInstant()
-                )
+                LocalDateTime.of(2026, 8, 15, 10, 0)
         );
 
         appointment.setDepartment("test department");

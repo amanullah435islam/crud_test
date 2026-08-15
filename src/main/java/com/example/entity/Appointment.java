@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -20,8 +21,8 @@ public class Appointment {
     private Long id;
 
     private  String description;
-    private Date startTime;
-    private  Date endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private  String Department;
     private  String Room;
     private  String RoomType;
