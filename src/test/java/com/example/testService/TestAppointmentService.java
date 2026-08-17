@@ -214,52 +214,6 @@ public class TestAppointmentService {
     }
 
 
-
-
-//    public void delete(Long id) {
-//        appointmentRepo.deleteById(id);
-//    }
-
-
-//    //repository te ai method takle test ar jonno nicer method use hobe.
-
-//    // =========================
-//    // DELETE
-//    // =========================
-//    @Test
-//    void testDeleteAppointment() {
-//
-//        Long id = 1L;
-//
-//
-//        doNothing()
-//                .when(appointmentRepo)
-//                .deleteById(id);
-//
-//
-//        appointmentService.delete(id);
-//
-//
-//        verify(appointmentRepo, times(1))
-//                .deleteById(id);
-//    }
-
-
-
-
-//    public void delete(Long id) {
-//        Appointment appointment = appointmentRepo.findById(id)
-//                .orElseThrow(() ->
-//                        new EntityNotFoundException(
-//                                "Appointment with id: " + id + " not found!"
-//                        ));
-//
-//        appointmentRepo.delete(appointment);
-//    }
-
-
-//    //repository te ai method takle test ar jonno nicer method use hobe.
-
     // =========================
     // DELETE
     // =========================

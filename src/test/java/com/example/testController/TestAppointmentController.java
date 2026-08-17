@@ -4,6 +4,8 @@ import com.example.controller.AppointmentController;
 import com.example.entity.Appointment;
 import com.example.service.AppointmentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -41,6 +43,10 @@ public class TestAppointmentController {
                 .build();
 
         objectMapper = new ObjectMapper();
+
+        objectMapper.registerModule(new JavaTimeModule());
+
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
 
@@ -54,12 +60,27 @@ public class TestAppointmentController {
         Appointment appointment = new Appointment();
 
         appointment.setId(1L);
+
         appointment.setDescription("Test appointment");
+
+        appointment.setStartTime(
+                LocalDateTime.of(2026, 8, 15, 9, 0)
+        );
+
+        appointment.setEndTime(
+                LocalDateTime.of(2026, 8, 15, 10, 0)
+        );
+
         appointment.setDepartment("Cardiology");
+
         appointment.setRoom("Room 101");
+
         appointment.setRoomNumber("B-201");
+
         appointment.setRoomType("Cabin");
+
         appointment.setRoomStatus("Available");
+
 
         when(appointmentService.save(any(Appointment.class)))
                 .thenReturn(appointment);
@@ -68,7 +89,9 @@ public class TestAppointmentController {
         mockMvc.perform(
                         post("/api/auth/appointment/save")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(appointment))
+                                .content(
+                                        objectMapper.writeValueAsString(appointment)
+                                )
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
