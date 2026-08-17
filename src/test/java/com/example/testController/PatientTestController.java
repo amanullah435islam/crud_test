@@ -1,5 +1,13 @@
 package com.example.testController;
 
+import com.example.service.AppointmentService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+
 //import com.example.controller.PatientController;
 //import com.example.dto.request.PatientRequest;
 //import com.example.dto.response.PatientResponse;
@@ -20,11 +28,14 @@ package com.example.testController;
 //
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;  //POST, GET, PUT, DELETE
 //import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;   //status, jsonPath, content
-//
-//
-//@WebMvcTest(
-//        controllers = PatientController.class
-//)
+
+//@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@AutoConfigureMockMvc
+
+//or:
+
+//@SpringBootTest
+//@AutoConfigureMockMvc
 public class PatientTestController {
 //
 //    @Autowired
